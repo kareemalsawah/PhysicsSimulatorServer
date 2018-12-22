@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>1D Waves</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/bootstrap.css">
+<link rel="stylesheet" href="css/fonts/font-awesome-4.3.0/css/font-awesome.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+
+<div id="wrapper">
+	<ul id="navBar">
+	<li><a class="active" href="#">Simulate</a></li>
+	<li><a href="examples">Examples</a></li>
+	<li><a href="documentation">Documentation</a></li>
+	<li style="float:right;"><a id="boardA" href="#" onclick="boardSwitch();">Board Mode</a></li>
+	<li style="float:right;"><a href="#" class="btn btn-primary" id="undoBtn" onclick="undo();">Undo</a></li>
+	</ul>
+
+<div id="bodyWrapper">
+<div class="sideBySide" id="canvasDiv">
+<canvas id="graphCanvas"></canvas>
+</div>
+<div class="sideBySide" id="placementOptions">
+<div id="controls">
+	<a class="sideBySide buttonControls" id="pause" onclick='control("pause");'>&#9632;</a>
+	<a class="sideBySide buttonControls" id="play" onclick='control("play");'>&#9658;</a>
+	<a class="sideBySide buttonControls" id="nextFrame" onclick='control("nextFrame");'>&#8827;</a>
+</div>
+<br>
+<ul class="topnav" id="navBar2">
+<li><a id="mainNav" class="active navBar2Li" onclick='domShow("main");'>Main</a></li>
+<li><a id="TimeNav" class="navBar2Li" onclick='domShow("time");'>Time</a></li>
+<li><a id="SettingsNav" class="navBar2Li" onclick='domShow("settings");'>Settings</a></li>
+<li><a href="#" class="icon" onclick="navbarResponsive()">
+	<i class="fa fa-bars"></i></a></li>
+</ul>
+<script>
+function navbarResponsive() {
+    var x = document.getElementById("navBar2");
+    if (x.className === "topnav") {
+        x.className += " responsive";
+    } else {
+        x.className = "topnav";
+    }
+}
+</script>
+<div id="mainDiv">
+	<h2 id="currentCommand">Current Command: Running Simulation</h2>
+	<hr>
+	<h2 style="margin-bottom:-15px;">Wave 1</h2><br>
+	<div class="row">
+		<div class="col-25" style="width:25%;">
+        	<label>A,W,K,Phi:</label>
+      	</div>
+      	<div class="sideBySide" style="margin-right:10px;margin-top:7px;">
+        	<input type="text" id="wave1" value="1,10.7,20,0">
+      	</div>
+	</div>
+
+	<h2 style="margin-bottom:-15px;margin-top:40px;">Wave 2</h2><br>
+	<div class="row">
+		<div class="col-25" style="width:25%;">
+        	<label>A,W,K,Phi:</label>
+      	</div>
+      	<div class="sideBySide" style="margin-right:10px;margin-top:7px;">
+        	<input type="text" id="wave2" value="1,10,20,3.14">
+      	</div>
+	</div>
+	<a class="btn btn-primary" href="#" onclick="waveInfo = updateVars();">Update</a>
+</div>
+
+<div id="TimeDiv" style="display:none;">
+<h2 class="nav2Titles">Time Controls:</h2>
+
+	<div class="row">
+		<div class="col-25" style="width:25%;">
+        	<label>dt:</label>
+      	</div>
+      	<div class="sideBySide" style="margin-right:10px;margin-top:7px;">
+        	<input type="text" id="dtSetting" value="0.02">
+      	</div>
+	<a class="sideBySide btn btn-primary" style="margin-top:7px;" onclick="dtGeneral = parseFloat(document.getElementById('dtSetting').value);">Update dt</a>
+	</div>
+	<div class="row">
+      	<div class="col-25 sideBySide" style="width:25%;">
+        	<label>Time speed:</label>
+      	</div>
+      	<div class="col-20 slidecontainer sideBySide" style="margin-top:17px;">
+			 	<input type="range" min="0.1" max="10" value="1" step = "0.1" class="slider" id="timeSpeed">
+		</div>
+	<a class="btn btn-primary sideBySide" style="margin-top:7px;" onclick="resetDt();">Reset to natural time</a>
+    </div>
+    <h1 style="margin-top:40px;">Stopwatch:</h1>
+    <div class="row stopwatchControls">
+    <a class="btn btn-primary sideBySide stopwatchBtn" onclick="timer('start');">Start</a>
+    <a class="btn btn-primary sideBySide stopwatchBtn" onclick="timer('pause');">Stop</a>
+    <a class="btn btn-primary sideBySide stopwatchBtn" onclick="timer('reset');">Reset</a>
+    </div>
+    <div class="row">
+    <h2 id="timer">00:00.000</h2>
+    </div>
+
+
+</div>
+<div id="SettingsDiv" style="display:none;overflow-y: scroll;height:450px;">
+	<h2 class="nav2Titles">Settings:</h2>
+	<a class="btn btn-primary" onclick="saveSettings();" style="margin-top:10px;margin-bottom:20px;">Change and save settings</a>
+	<h2 class="nav2Titles">Simulation Canvas:</h2>
+
+    <div class="row">
+      	<div class="col-10 sideBySide">
+        	<label>Y range:</label>
+      	</div>
+      	<div class="rangeInput">
+	      	<div class="col-30 sideBySide">
+	        	<input type="text" class="rangeDefine" id="minGraphY" value="-10" size="2">
+	      	</div>
+	      	<div class="col-20 slidecontainer sideBySide">
+				 	<input type="range" min="-10" max="10" value="0" step = "0.1" class="slider" id="rangeY">
+			</div>
+
+	      	<div class="col-30 sideBySide">
+	        	<input type="text" class="rangeDefine" id="maxGraphY" value="10" size="2">
+	      	</div>
+      	</div>
+    </div>
+    <div class="row">
+      	<div class="col-10 sideBySide">
+        	<label>Y scale:</label>
+      	</div>
+      	<div class="rangeInput">
+	      	<div class="col-30 sideBySide">
+	        	<input type="text" class="rangeDefine" id="minScaleY" value="0.1" size="2">
+	      	</div>
+	      	<div class="col-20 slidecontainer sideBySide">
+				 	<input type="range" min="0.1" max="10" value="1" step = "0.1" class="slider" id="scaleY">
+			</div>
+
+	      	<div class="col-30 sideBySide">
+	        	<input type="text" class="rangeDefine" id="maxScaleY" value="10" size="2">
+	      	</div>
+      	</div>
+    </div>
+
+    <h2 class="nav2Titles" style="margin-top:40px;margin-bottom:0px;">Download/Upload:</h2>
+    <br>
+	<a class="btn btn-primary" onclick="down();" style="margin-bottom:10px;">Save and Download</a>
+	<br>
+	<input type="file" id="fileToLoad">
+	<a class="btn btn-primary" onclick="loadFileAsText();">Upload Saved Scene</a>
+
+</div>
+
+
+</div>
+
+<div id="boardMode" class="boardBox">
+<canvas id="boardCanvas"></canvas>
+</div>
+</div>
+</div>
+<h1 id="orientation-error">Please use this application only in landscape mode (change the settings in the phone to allow for screen rotation and use the application in landscape then reload the page)</h1>
+</body>
+
+<script>
+function resizeCanvasToDisplaySize(canv) {
+   // look up the size the canv is being displayed
+   var width = canv.clientWidth;
+   var height = canv.clientHeight;
+	 console.log(width);
+	 console.log(height);
+   // If it's resolution does not match change it
+   if (canv.width !== width || canv.height !== height) {
+     canv.width = width;
+     canv.height = height;
+     return true;
+   }
+
+   return false;
+}
+
+resizeCanvasToDisplaySize(document.getElementById("graphCanvas"));
+resizeCanvasToDisplaySize(document.getElementById("boardCanvas"));
+document.getElementById("boardMode").style = "display:none;";
+</script>
+<script src="js/board.js"></script>
+<script src="js/waves2/main.js"></script>
+<script src="js/waves2/dom.js"></script>
+<script src="js/helper.js"></script>
+<script>
+loop();
+
+
+
+</script>
+</html>

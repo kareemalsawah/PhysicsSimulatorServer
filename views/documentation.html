@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<head>
+    <title>Documentation</title>
+    <link rel="stylesheet" type="text/css" href="css/fonts/font-awesome-4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="css/documentation/stroke.css">
+    <link rel="stylesheet" type="text/css" href="css/documentation/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="css/documentation/animate.css">
+    <link rel="stylesheet" type="text/css" href="css/documentation/prettyPhoto.css">
+    <link rel="stylesheet" type="text/css" href="css/documentation/style.css">
+    <link rel="stylesheet" type="text/css" href="css/documentation/shCore.css" media="all">
+    <link rel="stylesheet" type="text/css" href="css/documentation/shThemeRDark.css" media="all">
+    <link rel="stylesheet" type="text/css" href="css/documentation/custom.css">
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+</head>
+
+<body>
+<ul id="navBar">
+<li id="navBarLi"><a id="navBarLiA" href="/">Simulate</a></li>
+<li id="navBarLi"><a id="navBarLiA" href="examples">Examples</a></li>
+<li id="navBarLi"><a id="navBarLiA" class="active2" href="#">Documentation</a></li>
+</ul>
+    <div id="wrapper">
+
+        <div class="container">
+
+            <section id="top" class="section docs-heading">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="big-title text-center">
+                            <h1>Documentation</h1>
+                        </div>
+                    </div>
+                </div>
+
+                <hr>
+
+            </section>
+
+            <div class="row">
+
+                <div class="col-md-3">
+                    <nav class="docs-sidebar" data-spy="affix" data-offset-top="300" data-offset-bottom="200" role="navigation">
+                        <ul class="nav">
+                            <li><a href="#line1">Overview</a></li>
+                            <li><a href="#line2">How to use it</a>
+                                <ul class="nav">
+                                    <li><a href="#line2_1">Interface Overview</a></li>
+                                    <li><a href="#line2_2">Placing Particles</a></li>
+                                    <li><a href="#line2_3">Placing Springs</a></li>
+                                    <li><a href="#line2_4">Placing Supports</a></li>
+                                    <li><a href="#line2_5">Placing Simple Ropes</a></li>
+                                    <li><a href="#line2_6">Placing Complex Ropes</a></li>
+                                    <li><a href="#line2_7">Graphing Mode</a></li>
+                                    <li><a href="#line2_8">Board Mode</a></li>
+                                    <li><a href="#line2_9">Time controls</a></li>
+                                    <li><a href="#line2_10">General settings</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#line3">Examples</a>
+                            <ul class="nav">
+                                    <li><a href="#line3_1">Uniform Circular Motion</a></li>
+                                    <li><a href="#line3_2">Simple Harmonic Motion (Spring)</a></li>
+                                    <li><a href="#line3_3">Simple Harmonic Motion (Pendulum)</a></li>
+                                    <li><a href="#line3_4">Multiple Pendulums</a></li>
+                                    <li><a href="#line3_5">Double Pendulum</a></li>
+                                    <li><a href="#line3_6">Damped Oscillations</a></li>
+                                    <li><a href="#line3_7">Forced Oscillations</a></li>
+                                    <li><a href="#line3_7">Transverse Waves</a></li>
+                                </ul>
+                                </li>
+                                <li><a href="#line6">Custom Examples</a>
+                                  <ul class="nav">
+                                    <li><a href="#line6_1">1D Waves</a></li>
+                                    <li><a href="#line6_2">2D Waves</a></li>
+                                  </ul>
+                                </li>
+                            <li><a href="#line4">Technical details</a>
+                            <ul class="nav">
+                                    <li><a href="#line4_1">Time Integration</a>
+                                    <ul class="nav" style="margin-left:5%;">
+                                    <li><a href="#line4_1_1">Math notation</a></li>
+                                    <li><a href="#line4_1_2">Explicit Euler</a></li>
+                                    <li><a href="#line4_1_3">Symplectic Euler</a></li>
+                                    <li><a href="#line4_1_4">Implicit Euler</a></li>
+                                    <li><a href="#line4_1_5">Linearized Implicit Euler</a></li>
+                                    <li><a href="#line4_1_6">Implicit Explicit</a></li>
+                                    <li><a href="#line4_1_7">Implicit Symplectic</a></li>
+                                    </ul>
+                                </li>
+                                    <li><a href="#line4_2">Forces</a>
+                                    <ul class="nav" style="margin-left:5%;">
+                                    <li><a href="#line4_2_1">Spring Force</a></li>
+                                    <li><a href="#line4_2_2">Simple Gravity</a></li>
+                                    <li><a href="#line4_2_3">Linear Damping</a></li>
+                                    </ul>
+                                    </li>
+                                </ul></li>
+                            <li><a href="#line5">References</a></li>
+                            <li><a href="#line7">Mentions</a></li>
+                        </ul>
+                    </nav >
+                </div>
+                <div class="col-md-9">
+                    <section id="line1" class="section" style="margin-top:-200px;">
+                        <div class="row">
+                            <div class="col-md-12 left-align">
+                                <h2 class="dark-text">Overview<hr></h2>
+                            </div>
+                            <!-- end col -->
+                        </div>
+                        <!-- end row -->
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p>Welcome to the physics simulator. This web application will allow you to simulate most of the experiments in PHM021 ,also called "Vibrations and waves", or similar courses. It could also be used for trying out your ideas without having to build the physical experiment. This documentation will help you learn how to use the simulator. It will also contain many of the issues you might face, so if you face a problem, make sure to look for it here. If you found an issue that is not enlisted in this documentation, please don't hesitate to contact us at [support email].</p>
+
+                                <h4 style="font-size:30px;margin-top:20px;">Features of the simulator</h4>
+                                <ul style="margin-left:40px;list-style-type:disc;">
+                                    <li>Scenes can be built using a simple drag and drop interface.</li>
+                                    <li>Scenes can be saved and downloaded; saved scenes can be uploaded and loaded to be simulated.</li>
+                                    <li>Stop and run the simulation at any time; you can also run the simulation step by step.</li>
+                                    <li>You can use a built-in tool to graph the position, velocity, or Kinetic Energy of any particle over time. You can also graph multiple values using different colors on the same graph.</li>
+                                    <li>Built-in stopwatch to measure time accurately</li>
+                                    <li>Multiple Time-integration methods including methods that ensure the total energy is constant unless an external force affects the system like air drag.</li>
+                                    <li>Everything is available on a website online and can be downloaded to run offline.</li>
+                                    <li>Multiple example scenes some are included with real-life videos to compare the simulation with the real-life experiment.</li>
+                                    <li>Full control over most settings including technical ones (e.g. time-step size, time-integration method, minimum convergence for implicit method, and many others). For more details on what each settings does, see <a href="#line4_1">the technical section of this documentation</a>.</li>
+                                </ul>
+
+                                <div class="intro2 clearfix">
+                                    <p><i class="fa fa-exclamation-triangle"></i> Warning: This web application was designed for PC/laptop. Mobile support is currently being added, so you are welcome to try it out, but some of the features might behave unexpectedly.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="line2" class="section" style="margin-top:-300px;">
+                        <div class="row">
+                            <div class="col-md-12 left-align">
+                                <h2 class="dark-text">How to use it<a href="#top">#back to top</a><hr></h2>
+                            </div>
+                        </div>
+
+                        <h4 id="line2_1">Interface Overview</h4>
+
+                        <img src="images/interfaceOverview.png" style="width:80%"></img>
+
+                        <p>
+                            Simulation Canvas is where all your scenes will be displayed.
+                            <br>
+                            Controls are used in order to pause, play, or step the simulation (frame by frame)
+                            <br>
+                            Toolbar contains all of the settings and features and allows to switch between them effortlessly.
+                        </p>
+                        <hr>
+
+                        <h4 id="line2_2">Placing particles</h4>
+
+                        <p>
+                            Let's start adding elements to the scene. We will start with a simple particle. Go to the place objects tab in the toolbar; then, select particle from Select Item to Place.
+                            <br>
+                            <p>
+                            You should be able to see all the settings for the particle. The settings are described below:
+                            </p>
+                            <ul style="margin-top:-3%;margin-left:2%;">
+                                <li>Mass is simply the mass of the particle in kg</li>
+                                <li>Velocity is the inital velocity of the particle as a 2D vector in m/s. (ex: 2,3 means the particle has a veloctity of 2 m/s along the x-axis and 3 m/s along the y-axis)</li>
+                                <li>Fixed is a 2D vector that represents whether the particle is fixed along a certain axis (ex: 1,0 means the particle is fixed along the x-axis i.e. moves only in the y-axis. 1,1 means the particle is completely fixed)</li>
+                                <li>Radius is used to draw the particle and doesn't affect the simulation</li>
+                                <li>Color is also used to draw the particle and doesn't affect the simulation</li>
+                                <li>You can place the particle using the mouse by selecting "place with mouse" then clicking in the simulation canvas on the position where you want the particle to be placed.</li>
+                                <li>If you want exact coordinates, you can use place using coordinates where the particle will be placed in the position written in the position option (ex: 2,0 means the object has a position of 2 along the x-axis and a position of 0 along the y-axis)</li>
+                            </ul>
+                        </p>
+                        <hr>
+
+                        <h4 id="line2_3">Placing Springs</h4>
+
+                        <p>
+                            Adding this is the same as the <a href="#line2_2">particle</a>; the only difference is in the settings described below:
+                            <ul style="margin-top:-3%;margin-left:2%;">
+                                <li>K is the spring constant measured in N/m</li>
+                                <li>l0 is the resting length of the spring measured in m</li>
+                                <li>Damping constant is similar to the normal damping coefficient but acts only on the component of the velocity of the particles along the edge connecting them. For more details see <a href="#line4_1">the technical section of this documentation</a></li>
+                                <li>Width is used to draw the spring/edge and doesn't affect the simulation</li>
+                                <li>Color is also used to draw the spring/edge and doesn't affect the simulation</li>
+                                <li>After you set all the above, click place. Then, click on the first particle followed by the second particle you want to connect the spring between. Note that this means that you must place the 2 particles before you place the spring between them</li>
+                            </ul>
+
+                            <div class="intro2 clearfix">
+                                <p><i class="fa fa-exclamation-triangle"></i> Warning: You need to be careful with the initial positions of your 2 particles that are connected with a spring. If the initial displacement between them exceeds the resting length, the particles will go through each other because springs are simulated with ideal behaviour. Try it and see what happens. Place two particles with a distance of 4 between them and connected them with a spring with the resting length = 3.
+                                </p>
+                            </div>
+                        </p>
+                        <hr>
+
+                        <h4 id="line2_4">Placing Supports</h4>
+
+                        <p>
+                            A support is basically a rod. By using a large enough spring constant the spring can simulate a rod; however, this can cause some issues described at the end. The advantages to using this instead of the spring is that is automatically calculates l0 for you in order to maintain the distance between the two particles you selected constant. Adding this is the same as the <a href="#line2_3">spring</a>; the only difference that you don't need a resting length l0
+                            <br>
+                            The problem with this approach is that linear damping can caused unexpected behaviour like the particle oscillating with a very high frequency. This doesn't affect the position of the particle as much as it affects the velocity which makes the graphs of the velocities incomprehensible, so if you will use supports (or springs with a high K) be careful from the effects of damping. This can be fixed by treating the connected objects as rigid bodies; this feature can be added at a future date.
+                        </p>
+                        <hr>
+
+                        <h4 id="line2_5">Placing Simple Ropes</h4>
+
+                        <p>
+                            There are two kinds of ropes available, simple ropes and complex ropes. Simple rope is just multiple particles connected with springs. Their settings are the same expect for one extra setting in the <a href="#line2_6">complex rope</a>. Note that unlike springs you don't need to place two particles before adding a rope. The settings for both of the particles are included in the rope settings, and they are placed with the rope simultaneously. These are the settings for the simple rope:
+                            <ul style="margin-top:-3%;margin-left:2%;">
+                                <li>Velocity is the initial velocity of each of the start and end particles. (first 2 numbers are the velocity components of the start particles)</li>
+                                <li>Fixed is the same as the fixed setting in <a href="line2_2">particle</a> but for two particles (2 numbers for each particle)</li>
+                                <li>Mass is the mass of every particle in the rope</li>
+                                <li>Particle width is the radius used to draw every rope in the rope</li>
+                                <li>Num of sections is the number of particles in simple rope and num of sections in complex rope.</li>
+                                <li>K is the spring constant used for the spring in the rope</li>
+                                <li>Beta is the damping constant for used for each spring in the rope</li>
+                                <li>Particle color is the color used to draw particles in the rope</li>
+                                <li>Spring color is the color used to draw springs in the rope</li>
+                            </ul>
+                        </p>
+                        <hr>
+
+                        <h4 id="line2_6">Placing Complex Ropes</h4>
+
+                        <p>
+                            Complex rope is two simple ropes (top and bottom layer) connected to each other with springs in the shape of an X. Placing a complex rope is the same as placing a<a href="line2_5"> simple rope</a> except for the setting width. This is the width of the rope (distance between the top and bottom layers).
+                        </p>
+                        <hr>
+
+                        <h4 id="line2_7">Graphing Mode</h4>
+
+                        <p>
+                            Graphing is controled using two tabs, graph and variables. Graph displays the curves currently visible, you can also shift the graph and scale it along both axes from the graph tab.
+                            <br>
+                             Settings for what is graphed is in the variables tab. You can add a new graph by clicking the add button. You will see a new default element is added. You can edit it, delete it, or switch its visibility (from hidden to visible or vice versa). All elements are hidden by default.
+                             <br>
+                             Settings in edit
+                             <ul style="margin-top:-3%;margin-left:2%;">
+                                <li>Name is the name displayed for the element. This doesn't affect the curve but is for convenience when you need to graph multiple curves</li>
+                                <li>Particle number is the particle that you graph a property of. Particle numbers are written on them</li>
+                                <li>To graph is the property of the particle that you will graph. You can graph its position components, distance from the origin, velocity components, speed, and kinetic energy</li>
+                                <li>Shift Y is just a value added to curve (maybe you want to centralize it). It just shifts the curve up or down</li>
+                                <li>Color is the color of the curve displayed in the graph tab</li>
+                             </ul>
+                        </p>
+                        <hr>
+
+
+                        <h4 id="line2_8">Board Mode</h4>
+
+                        <p>
+                            Board mode is a simple option that allows for writing or drawing on the whole web page. All you have to do is press the board mode button in the top right corner to activate it.
+                            You can know it is active when you see the undo button. Now you can draw or write whatever you want anywhere on the page.
+                            The undo button deletes the last thing you drew.
+                            To exit board mode just press the board mode button. What you drew is saved and will reappear when you reopen board mode.
+                        </p>
+                        <hr>
+
+                        <h4 id="line2_9">Time controls</h4>
+
+                        <p>
+                            In the time tab, you can change settings about time. You can also use a stopwatch that is adjusted the changes you made in the settings.
+                             <ul style="margin-top:-3%;margin-left:2%;">
+                                <li>dt is the size of the step taken each frame. For more information see <a href="#line4_1">the technical section of this documentation</a></li>
+                                <li>Time speed is how many frames are displayed per second. This just speeds up or slows down the simulation. Warning: if you increase time speed too much you might notice that the simulation doesn't speed up anymore; this is because your computer can't run the simulation at that speed (i.e. it is running at the maximum speed it can)</li>
+                                <li>The stopwatch is very intuitive to use. The advantage is that your time measurements will be accurate if you change time speed or dt. In other words, if you increase time speed, you will see that the stopwatch timer runs faster and vice versa</li>
+                             </ul>
+                        </p>
+                        <hr>
+
+                         <h4 id="line2_10">General Settings</h4>
+
+                        <p>
+                            The settings tab allows you to change many general settings that affect the simulation as a whole. You can also sometimes find a special settings section which are specific to the custom <a href="line3">examples</a>. You can also download the current scene or upload a downloaded scene from the settings. Here is a description of each of the previously mentioned features:
+                             <ul style="margin-top:-3%;margin-left:2%;">
+                                <li>Gravity is a 2D vector describing the acceleration due to gravity affecting all particles in the scene measured in m/(s.s)</li>
+                                <li>Linear Damping is a scalar representing the damping coefficient due to air</li>
+                                <li>Type of integration is the method of time integration used to run the simulation</li>
+                                <li>Minimum convergence is max error that is allowed per a step in implicit euler</li>
+                                <li>Maximum loops to reach convergence is the maximum iterations of implicit euler allowed before cutting of the loop in order to prevent simulations from running too slow</li>
+                                <li>More information about these variables is available in <a href="#line4_1">the technical section of this documentation</a></li>
+                             </ul>
+                             <p>Simulation Canvas settings allow you to change the boundaries of the simulation canvas (shift it in the x or y and scale it)</p>
+                             <p>To download the current scene just click on "Save/Download". To upload a scene from your device and run it in the simulator, choose your file; then, click "Upload Saved Scene" for the file to be loaded.</p>
+                             <div class="intro2 clearfix">
+                                    <p><i class="fa fa-exclamation-triangle"></i>Warning: All data currently in the scene will be deleted when you upload a scene from your device.
+                                    </p>
+                                </div>
+                        </p>
+
+                    </section>
+
+                    <section id="line3" class="section" style="margin-top:-300px;">
+
+                        <div class="row">
+                            <div class="col-md-12 left-align">
+                                <h2 class="dark-text">Examples<a href="#top">#back to top</a><hr></h2>
+                            </div>
+                        </div>
+
+                        <h4 id="line3_1">Uniform Circular motion</h4>
+
+                        <p>
+                        In this experiment, particle 1 is fixed at the origin, particle 2 is connected to particle 1 with a support and given an initial velocity = 6 m/s. Watch the particle move in a circle and compare its motion with the graphs.
+                        <ul style="margin-top:-3%;margin-left:2%;">
+                        <li>The red curve is the X-position of particle 2</li>
+                        <li>The blue curve is the Y-position of particle 2</li>
+                        <li>The green curve is the speed of particle 2</li>
+                        </ul>
+                        You can add more variables to graph if you want.
+                        </p>
+                        <hr>
+
+                        <h4 id="line3_2">Simple Harmonic Motion (Spring)</h4>
+
+                        <p>
+                        In this experiment, 3 fixed particles are connected to 3 moving particles (all have mass = 1 kg) at different lengths. All are connected using the same spring constant k = 3 N/m and l0 = 4 m. This is used to demonstrate that the amplitude of the oscillations doesn't affect the period of the oscillations. This is especially clear in the graphs. Each curve represents the X-position of one of the moving particles. Watch the graph as they all reach their peaks at the same time; this means that all of the oscillations have the same period and frequency.
+                        </p>
+                        <hr>
+
+                        <h4 id="line3_3">Simple Harmonic Motion (Pendulum)</h4>
+
+                        <p>
+                        In this experiment, a fixed particle is connected to a moving particle with gravity set to -10 in along the y-axis. This is a simple pendulum. You can also view the X-position of the moving particle in the graph.
+                        </p>
+                        <hr>
+
+                        <h4 id="line3_4">Multiple Pendulums</h4>
+
+                        <p>
+                        In this experiment, multiple simple pendulums are built using different support lengths. They are all started from the same angle theta. Because the lengths are different then their periods will be different. Watch as their periods shift, and if you pay attention you can sometimes see a couple of them line up for a moment before diverging again. Graphs of the five moving particles are available but hidden to avoid having too many curves on the graph canvas. Turn ones you want to see visible from the variables tab.
+                        </p>
+                        <hr>
+
+                        <h4 id="line3_5">Double Pendulum</h4>
+
+                        <p>
+                        This experiment is a bit different. Although it might see simple, it is actually very complicated. Constructing this scene is just two pendulums connected to each other. The fascinating thing is that such a simple configuration can result in almost random movements. You can run the simulation and watch the graph of either moving particles. Try to locate any pattern (you probably will fail). If you want to read more about double pendulums and such choatic system, search online for choas theory.
+                        </p>
+                        <hr>
+
+                        <h4 id="line3_6">Damped Oscillations</h4>
+
+                        <p>
+                            This experiment is a damped mass-spring system. With mass = 1 kg and k = 3 N/m. You can set the damping coefficient using the linear damping setting in the settings tab. Watch the graph of the moving particle as the amplitude dies out. Can you reach all three cases of damping (underdamping - critical damping - overdamping).
+                        </p>
+                        <hr>
+
+                        <h4 id="line3_7">Forced Oscillations</h4>
+
+                        <p>
+                            This experiment demonstrates the effect of a periodic force on a damped system, also called force oscillations. You can change the w of the force applied from special settings in the settings tab. The spring has constant k = 5 N/m, l0 = 6 m, and the particle has mass = 1 kg. You can also change the damping coefficient from the linear damping setting in the settings tab.
+                        </p>
+
+                    </section>
+
+                    <section id="line6" class="section" style="margin-top:-300px;">
+
+                        <div class="row">
+                            <div class="col-md-12 left-align">
+                                <h2 class="dark-text">Custom Examples<a href="#top">#back to top</a><hr></h2>
+                            </div>
+                        </div>
+                        <h4 id="line6_1">1D waves</h4>
+                        <hr>
+                        This example is custom made to allow for the superposition of 2 waves. You can change the following variables for each of the top to waves:
+                        <ul style="margin-top:-3%;margin-left:2%;">
+                           <li>A is the amplitude of the wave</li>
+                           <li>W is the coefficient of X in the equation of the wave</li>
+                           <li>K is the coefficient of t in the equation of the wave</li>
+                           <li>Phi is the phase shift of the wave. The wave are simulated using a sine function</li>
+                        </ul>
+                        After defining the variables of each of the two top waves, the bottom wave is the sum of them. You can form standing waves, beat phenomenon, and many others.
+                        <hr>
+                        <h4 id="line6_2">2D waves</h4>
+                        This example is custom wave to demonstrate wave diffraction through a small slit and the interference of multiple waves using multiple slits.
+                        <br>You can define the number of slits and the frequency of the source wave. You can also view the results in 3 modes:
+                        <ul style="margin-top:0%;margin-left:2%;">
+                          <li>Color mode displays the wave in multiple colors where the peak of the wave is red, the trough is blue, between them is green</li>
+                          <li>Grayscale mode displays the peak of the wave as white, the trough as black, and gray between them</li>
+                          <li>Wave Front mode displays only the wave fronts using white lines</li>
+                        </ul>
+                        <hr>
+                    </section>
+
+                    <section id="line4" class="section" style="margin-top:-200px;">
+
+                        <div class="row">
+                            <div class="col-md-12 left-align">
+                                <h2 class="dark-text">Technical Details<a href="#top">#back to top</a><hr></h2>
+                            </div>
+                        </div>
+
+                        <h4 id="line4_1">Time Integration</h4>
+                        There are five methods available to use in the simulation. Explicit Euler, Symplectic Euler, Implicit Euler, a combination of Implicit and Explicit, and a combination of Implicit and Symplectic. All these methods work by using discrete units for time = dt instead of using continous time.
+                        <hr>
+
+                        <div class="tabbedDocumentation" style="margin-bottom:100px;">
+                        <h4 id="line4_1_1">Math notation:</h4>
+                        q is the position of the particle, and it is a 2 dimensional vector.
+                        <br>
+                        All vectors are represented in bold.
+                        <br>
+                        M is a diagonal matrix containing two entries for the mass of each particle.
+                        <br>
+                        Superscripts indicate at which time step a variable is. If the current time step is n, variables have a superscript n. Therefore, a superscript of n+1 means it is the value of a variable at the next time step.
+                        <br>
+                        Id is the identity matrix
+                        <hr>
+
+                        <h4 id="line4_1_2">Explicit Euler</h4>
+                        This is the simplest time integration method. It works by using the normal equations of motion (velocity is derivative of the position,acceleration is the derivative of velocity, and Newton's Second law "F=ma") and using forward finite differencing. This results in the following equations:
+                        <p>
+                        $$\mathbf{q}^{n+1} = \mathbf{q}^{n} + h\dot{\mathbf{q}}^{n}$$
+                        </p>
+                        <p> $$\dot{\mathbf{q}}^{n+1} = \dot{\mathbf{q}}^{n} + hM^{-1}\mathbf{F}(\mathbf{q}^{n},\dot{\mathbf{q}}^{n})$$
+                        </p>
+                        The problem with Explicit Euler is that is causes an increase in the total energy of the system. This can easily cause many problems and cause the simulation to explode. See <a href="#line4_1_5">Explicit Implicit combination</a> for a solution to this problem.
+                        <hr>
+
+                        <h4 id="line4_1_3">Symplectic Euler</h4>
+                        Explicit Euler used forward differencing. This method uses backwards differencing. This results in the following equations:
+                        <p> $$\dot{\mathbf{q}}^{n+1} = \dot{\mathbf{q}}^{n} + hM^{-1}\mathbf{F}(\mathbf{q}^{n},\dot{\mathbf{q}}^{n})$$
+                        </p>
+                        <p>
+                        $$\mathbf{q}^{n+1} = \mathbf{q}^{n} + h\dot{\mathbf{q}}^{n+1}$$
+                        </p>
+                        <hr>
+
+                        <h4 id="line4_1_4">Implicit Euler</h4>
+                        This method works in a very different way compared to the previous two methods. Instead of using the current position or velocity to update either. It uses the next time step's position and velocity, but they are not available. Therefore, Newton's method is used to find them. The previous equations become the following:
+
+                        <p>
+                        $$\mathbf{q}^{n+1} = \mathbf{q}^{n} + h\dot{\mathbf{q}}^{n+1}$$
+                        </p>
+                        <p> $$\dot{\mathbf{q}}^{n+1} = \dot{\mathbf{q}}^{n} + hM^{-1}\mathbf{F}(\mathbf{q}^{n+1},\dot{\mathbf{q}}^{n+1})$$
+                        </p>
+
+                        By using Newton's method the following equations are executed every time step:
+
+                        <p>$$(\mathbf{M}\, -\, (h^2\frac{\partial \mathbf{F}}{\partial \mathbf{q}^{n+1}}\, +\, h\frac{\partial \mathbf{F}}{\partial \mathbf{\dot{q}}^{n+1}}))\, \delta\dot{\boldsymbol{q}}_{i+1}\: =\: -\mathbf{M}(\dot{\mathbf{q}}_{i}^{n+1}-\dot{\mathbf{q}}^n)+h\mathbf{F}(\mathbf{q}^{n}\, +\, h\dot{\mathbf{q}}_{i}^{n+1},\dot{\mathbf{q}}_{i}^{n+1})$$</p>
+
+                        i is the index of the loop. This is executed until either the change in the velocity becomes less than the minimum convergence required or it is executed a number that exceeds the maximum number of loops (both can be changed in the settings). The only issue is that this means the simulator needs to be able to calculate the partial derivative of F which are the Hessians of the potential. Each force has a function that calculates that partial derivative with respect to q and v. Note that these hessians are evaluated at the same point as the force i.e.
+                        <p>$$\frac{\partial \mathbf{F}}{\partial \mathbf{q}^{n+1}} \: =\:  \frac{\partial \mathbf{F}}{\partial \mathbf{q}^{n+1}}(\mathbf{q}^{n}\, +\, h\dot{\mathbf{q}}_{i}^{n+1},\dot{\mathbf{q}}_{i}^{n+1})$$</p>
+                        <p>$$\frac{\partial \mathbf{F}}{\partial \mathbf{\dot{q}}^{n+1}} \: =\:  \frac{\partial \mathbf{F}}{\partial \mathbf{\dot{q}}^{n+1}}(\mathbf{q}^{n}\, +\, h\dot{\mathbf{q}}_{i}^{n+1},\dot{\mathbf{q}}_{i}^{n+1})$$</p>
+
+                        Detailed derivations are excluded but can be found easily either in the <a href="#line5">references</a> or online.
+                        <hr>
+
+
+                        <h4 id="line4_1_5">Linearized Implicit Euler</h4>
+                          This method is basically implicit euler with one difference.
+                          Newton's method is applied only once not until the error is below a certain threshold as in Implicit Euler.
+                          This method is very good especially for slower devices as it has the stability of Implicit Euler without being computationally expensive.
+                        <hr>
+
+
+                        <h4 id="line4_1_6">Implicit Explicit Combination</h4>
+                        Thiis method has a very simple concept. Since explicit euler generally increases the total energy and implicit euler generally reduces it, the simulator will calculate the energy at the beginning of the simulation; at each time step the simulator will use either explicit or implicit euler depending on the system's current energy. If it is higher than the initial energy, the simulator will use implicit euler and vice versa. This means that we need to implement functions to calculate the net energy in a system = potential energy + kinetic energy. As well as functions that reduce the calculate system's initial energy to account for damping.
+
+                        <hr>
+
+                        <h4 id="line4_1_7">Implicit Symplectic Combination</h4>
+                        Similar to the previous method, this method combines Implicit and Symplectic Euler in the same way. During testing, this method was the most reliable and stable of all the methods, so it is recommended to use this method.
+                        </div>
+
+                        <h4 id="line4_2">Forces</h4>
+                        <div class="tabbedDocumentation">
+                        Each force object implements a function that calculates energy, gradient of the energy, and hessian of the energy.
+                        <h4 id="line4_2_1">Spring Force</h4>
+                        The spring force has two components the actual spring force and the damping force. Each will be shown seperately. Firstly, the spring force. It is a force that is proportional to the displacement from the equilibrium position (Hooke's law) and is always directed towards the equilibirum.
+                        <p>$$l = \left \| \mathbf{x_{1}}-\mathbf{x_{2}} \right \|$$</p>
+                        <p>$$\hat{\mathbf{n}} = \frac{\mathbf{x_{1}}-\mathbf{x_{2}}}{\left \| \mathbf{x_{1}}-\mathbf{x_{2}} \right \|}$$</p>
+                        <p>$$U(\mathbf{x_{1}},\mathbf{x_{2}}) = \frac{1}{2}k(l-l_{0})$$</p>
+                        <p>$$\mathbf{F_{1}} = k(l-l_{0})\hat{\mathbf{n}}$$</p>
+                        <p>$$\mathbf{F_{2}} = -k(l-l_{0})\hat{\mathbf{n}}$$</p>
+                        <p>$$\frac{\partial \mathbf{F}}{\partial \mathbf{q}} = \begin{pmatrix}\mathbf{K} & -\mathbf{K}\\-\mathbf{K} & \mathbf{K}\end{pmatrix}$$</p>
+                        <p>$$\mathbf{K} = -k(\hat{\mathbf{n}}\hat{\mathbf{n}}^{T}+\frac{l-l_{0}}{l}(\mathbf{Id}-\hat{\mathbf{n}}\hat{\mathbf{n}}^{T}))$$</p>
+                        <p>$$\frac{\partial \mathbf{F}}{\partial \mathbf{\dot{q}}} = \mathbf{0}$$</p>
+
+
+                        Secondly the spring damping force. This is a linear damping force that affect only the components of the velocity of the two particles (connected to both ends of the spring) that is in the direction between them (along the spring).
+                        <p>$$\mathbf{F}_{1} = -\beta \hat{\mathbf{n}}\cdot (\mathbf{v}_{1}-\mathbf{v}_{2})\hat{\mathbf{n}}$$</p>
+                        <p>$$\mathbf{F}_{2} = \beta \hat{\mathbf{n}}\cdot (\mathbf{v}_{1}-\mathbf{v}_{2})\hat{\mathbf{n}}$$</p>
+                        <p>$$\frac{\partial \mathbf{F}}{\partial \mathbf{q}} = \begin{pmatrix}\mathbf{K} & -\mathbf{K}\\\mathbf{K} & -\mathbf{K}\end{pmatrix}$$</p>
+                        <p>$$\mathbf{K} = -\frac{\beta }{l}(\hat{\mathbf{n}}\cdot(\mathbf{v}_{1}-\mathbf{v}_{2})\mathbf{Id}+\hat{\mathbf{n}}(\mathbf{v}_{1}-\mathbf{v}_{2})^{T})(\mathbf{Id}-\hat{\mathbf{n}}\hat{\mathbf{n}}^{T})$$</p>
+                        <p>$$\frac{\partial \mathbf{F}}{\partial \dot{\mathbf{q}}} = \begin{pmatrix}-\mathbf{B} & \mathbf{B}\\\mathbf{B} & -\mathbf{B}\end{pmatrix}$$</p>
+                        <p>$$\mathbf{B} = \beta \hat{\mathbf{n}}\hat{\mathbf{n}}^{T}$$</p>
+
+                        Note: x1 and x2 are the positions of the two particles connected to the spring; similarlly, for v1 and v2. Beta is the damping coefficient.
+                        <hr>
+
+                        <h4 id="line4_2_2">Simple Gravity</h4>
+                        Simple gravity just applies a constant acceleration vector g, placing the zero reference for the potential energy at the origin.
+                        <p>$$U(\mathbf{x}) = -m\mathbf{g}\cdot \mathbf{x}$$</p>
+                        <p>$$\mathbf{F} = m\mathbf{g}$$</p>
+                        <p>$$\frac{\partial \mathbf{F}}{\partial \mathbf{q}} = \frac{\partial \mathbf{F}}{\partial \dot{\mathbf{q}}} = \mathbf{0}$$</p>
+                        <hr>
+
+                        <h4 id="line4_2_3">Linear Damping</h4>
+                        <p>$$\mathbf{F}_{i} = -\beta \mathbf{v}_{i}$$</p>
+                        <p>$$\frac{\partial \mathbf{F}}{\partial \dot{\mathbf{q}}} = -\beta (\mathbf{Id})$$</p>
+                        <p>$$\frac{\partial \mathbf{F}}{\partial \mathbf{q}} = \mathbf{0}$$</p>
+                        </div>
+                    </section>
+
+                    <section id="line5" class="section" style="margin-top:-300px;">
+
+                        <div class="row">
+                            <div class="col-md-12 left-align">
+                                <h2 class="dark-text">References<a href="#top">#back to top</a><hr></h2>
+                            </div>
+                        </div>
+
+                        Libraries and Resources Used:
+                        <ul style="margin-left:2%;">
+                            <li>Math.js (linear algebra)</li>
+                            <li>Bootstrap</li>
+                            <li><a href="https://www.edx.org/course/animation-cgi-motion-columbiax-csmm-104x-4">Animation and CGI</a></li>
+                            <li><a href="https://github.com/surjithctly/documentation-html-template">Template for this documentation</a></li>
+                            <li><a href="https://glitch.com">Glitch</a> was used to host the web application</li>
+                            <li><a href="https://github.com/kareemalsawah/PhysicsSimulation" target="_blank">Github repository</a></li>
+                        </ul>
+
+                    </section>
+
+                    <section id="line7" class="section" style="margin-top:-300px;">
+
+                        <div class="row">
+                            <div class="col-md-12 left-align">
+                                <h2 class="dark-text">Mentions<a href="#top">#back to top</a><hr></h2>
+                            </div>
+                        </div>
+
+                        This project was created by Kareem Elsawah here are some links to my profile:
+                        <ul style="margin-left:2%;">
+                            <li><a href="https://github.com/kareemalsawah" target="_blank">Github</a></li>
+                            <li><a href="https://www.linkedin.com/in/kareem-e-b29276133/" target="_blank">LinkedIn</a></li>
+                        </ul>
+
+                    </section>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="js/documentation/jquery.min.js"></script>
+    <script src="js/documentation/bootstrap.min.js"></script>
+    <script src="js/documentation/retina.js"></script>
+    <script src="js/documentation/jquery.fitvids.js"></script>
+    <script src="js/documentation/wow.js"></script>
+    <script src="js/documentation/jquery.prettyPhoto.js"></script>
+
+    <!-- CUSTOM PLUGINS -->
+    <script src="js/documentation/custom.js"></script>
+    <script src="js/documentation/main.js"></script>
+
+    <script src="js/documentation/shCore.js"></script>
+    <script src="js/documentation/shBrushXml.js"></script>
+    <script src="js/documentation/shBrushCss.js"></script>
+    <script src="js/documentation/shBrushJScript.js"></script>
+
+</body>
+<style>
+#navBarLi {
+    float: left;
+}
+
+#navBarLiA {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 30px;
+    text-decoration: none;
+}
+
+#navBarLiA:hover {
+    background-color: #111;
+}
+.active2{
+    background-color:#111;
+}
+#navBar {
+    list-style-type: none;
+    margin: 0;
+    margin-top:-10px;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+    margin-bottom:10px;
+    padding-right:100px;
+}
+
+.tabbedDocumentation{
+    margin-left:3%;
+}
+</style>
+</html>

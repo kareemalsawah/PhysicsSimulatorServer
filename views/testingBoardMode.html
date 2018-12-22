@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Testing Board mode</title>
+</head>
+
+<body>
+  <canvasBoard id="canvasBoard" width="800" height="600"></canvasBoard>
+  <a href="#" onclick="undo();">Undo</a>
+</body>
+
+<script>
+  var canvasBoardBoard = document.getElementById("canvasBoard");
+  var boardCtx = canvasBoardBoard.getContext("2d");
+
+  function drawBackground(){
+    boardCtx.beginPath();
+    boardCtx.rect(0,0,canvasBoard.width,canvasBoard.height);
+    boardCtx.fillStyle = "black";
+    boardCtx.fill();
+    boardCtx.closePath();
+  }
+
+
+  var inCanvas = false;
+  var drawing = false;
+  var points = [[]];
+  var dt = 50;
+
+  function loop(){
+    for(var i = 0; i < points.length; i++){
+      drawPointsFromArr(points[i]);
+    }
+    setTimeout(loop,dt);
+  }
+  loop();
+function drawPointsFromArr(arr){
+  for(var i = 0; i < arr.length; i++){
+    drawPoint(arr[i][0],arr[i][1]);
+  }
+  if(arr.length>1){
+    var firstPoint = arr[0];
+    for(var i = 1; i < arr.length; i++){
+      drawLine(firstPoint,arr[i]);
+      firstPoint = arr[i];
+    }
+  }
+}
+
+function undo(){
+  if(points.length>0){
+    points.splice(points.length-2,1);
+  }
+}
+function drawPoint(x,y){
+  boardCtx.beginPath();
+  boardCtx.arc(x,y, 3, 0, 2 * Math.PI);
+  boardCtx.fillStyle = "red";
+  boardCtx.fill();
+  boardCtx.closePath();
+}
+
+function drawLine(arr1,arr2){
+  boardCtx.beginPath();
+  boardCtx.moveTo(arr1[0],arr1[1]);
+  boardCtx.lineTo(arr2[0],arr2[1]);
+  boardCtx.lineWidth = 6;
+  boardCtx.strokeStyle = "red";
+  boardCtx.stroke();
+  boardCtx.closePath();
+}
+  //Events
+  canvasBoard.addEventListener("mousemove",function(evt){
+    var rect = canvasBoard.getBoundingClientRect();
+    var mouseX = evt.clientX - rect.left;
+    var mouseY = evt.clientY - rect.top;
+    if(inCanvas&&drawing){
+      var newPoint = [mouseX,mouseY];
+      points[points.length-1].push(newPoint);
+    }
+
+  });
+
+  canvasBoard.addEventListener("mouseover",function(){
+    inCanvas = true;
+  });
+
+  canvasBoard.addEventListener("mouseout",function(){
+    inCanvas = false;
+  });
+
+  document.addEventListener("mousedown",function(evt){
+    drawing = true;
+    if(inCanvas){
+      var rect = canvasBoard.getBoundingClientRect();
+      var mouseX = evt.clientX - rect.left;
+      var mouseY = evt.clientY - rect.top;
+      var newPoint = [mouseX,mouseY];
+      points[points.length-1].push(newPoint);
+    }
+
+  });
+
+  document.addEventListener("mouseup",function(){
+    drawing = false;
+    if(points[points.length-1].length>0){
+      points.push([]);
+    }
+  });
+</script>
+
+</html>

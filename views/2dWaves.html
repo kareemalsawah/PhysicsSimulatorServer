@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>2D Waves</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/bootstrap.css">
+<link rel="stylesheet" href="css/fonts/font-awesome-4.3.0/css/font-awesome.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+
+<div id="wrapper">
+	<ul id="navBar">
+	<li><a class="active" href="#">Simulate</a></li>
+	<li><a href="examples">Examples</a></li>
+	<li><a href="documentation">Documentation</a></li>
+	<li style="float:right;"><a id="boardA" href="#" onclick="boardSwitch();">Board Mode</a></li>
+	<li style="float:right;"><a href="#" class="btn btn-primary" id="undoBtn" onclick="undo();">Undo</a></li>
+	</ul>
+
+
+	<div id="bodyWrapper">
+<div class="sideBySide" id="canvasDiv">
+<canvas id="canvas"></canvas>
+</div>
+<div id="hiddenCanvas" style="display:none;">
+
+</div>
+<div class="sideBySide" id="placementOptions">
+<div id="controls">
+	<a class="sideBySide buttonControls" id="pause" onclick='control("pause");'>&#9632;</a>
+	<a class="sideBySide buttonControls" id="play" onclick='control("play");'>&#9658;</a>
+	<a class="sideBySide buttonControls" id="nextFrame" onclick='control("nextFrame");'>&#8827;</a>
+</div>
+<br>
+<script>
+function navbarResponsive() {
+    var x = document.getElementById("navBar2");
+    if (x.className === "topnav") {
+        x.className += " responsive";
+    } else {
+        x.className = "topnav";
+    }
+}
+</script>
+<div id="placeObjectsDiv">
+	<h2 id="currentCommand">Current Command:</h2>
+	<hr>
+	<div class="row">
+	<div class="col-25">
+				<label>No. of Slits</label>
+			</div>
+			<div class="col-75">
+				<input type="text" id="numSlits" value="1">
+			</div>
+	</div>
+	<div class="row">
+	<div class="col-25">
+				<label>Source Frequency</label>
+			</div>
+			<div class="col-75">
+				<input type="text" id="freq" value="1">
+			</div>
+	</div>
+
+	<div class="dropdown">
+  <button class="dropbtn">Mode</button>
+  <div class="dropdown-content">
+    <a href="#" onclick='mode = "color";drawScene();'>Color</a>
+    <a href="#" onclick='mode = "grayscale";drawScene();'>Grayscale</a>
+    <a href="#" onclick='mode = "waveFront";drawScene();'>Wave Fronts</a>
+  </div>
+</div>
+</div>
+
+	<a class="btn btn-primary" onclick='updateVars();' style="margin-top:10px;margin-bottom:20px;">Update</a>
+<div id="boardMode" class="boardBox">
+<canvas id="boardCanvas"></canvas>
+</div>
+</div>
+</div>
+</div>
+<br>
+</body>
+
+<script>
+function resizeCanvasToDisplaySize(canv) {
+   // look up the size the canv is being displayed
+   var width = canv.clientWidth;
+   var height = canv.clientHeight;
+	 console.log(width);
+	 console.log(height);
+   // If it's resolution does not match change it
+   if (canv.width !== width || canv.height !== height) {
+     canv.width = width;
+     canv.height = height;
+     return true;
+   }
+
+   return false;
+}
+resizeCanvasToDisplaySize(document.getElementById("canvas"));
+var mainCanvasWidth = document.getElementById("canvas").width;
+var mainCanvasHeight = document.getElementById("canvas").height;
+resizeCanvasToDisplaySize(document.getElementById("boardCanvas"));
+document.getElementById("boardMode").style = "display:none;";
+</script>
+<script src="js/board.js"></script>
+<script src="js/opencv.js"></script>
+<script src="js/waves/2d/main.js"></script>
+</html>

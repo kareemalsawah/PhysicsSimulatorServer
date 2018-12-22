@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>2D waves</title>
+
+</head>
+<body>
+  <canvas id="canvas" width="800" height="600" style="display:none;"></canvas>
+  <canvas id="canvas2" width="800" height="600" style="display:none;"></canvas>
+  <canvas id="canvas4" width="800" height="600" style="display:none;"></canvas>
+  <canvas id="canvas3" width="800" height="600"></canvas>
+</body>
+<script src="js/opencv.js"></script>
+<script>
+    var canvas = document.getElementById("canvas");
+    var ctx = canvas.getContext("2d");
+    var canvas2 = document.getElementById("canvas2");
+    var ctx2 = canvas2.getContext("2d");
+    var canvas4 = document.getElementById("canvas4");
+    var ctx4 = canvas4.getContext("2d");
+
+    function drawBackground(canvasCtx){
+      canvasCtx.beginPath();
+      canvasCtx.fillStyle = "black";
+      canvasCtx.rect(0,0,canvas.width,canvas.height);
+      canvasCtx.fill();
+      canvasCtx.closePath();
+    }
+    var dt = 100;
+
+
+    let canvas3 = document.getElementById("canvas3");
+    let ctx3 = canvas3.getContext('2d');
+
+
+    function loop(){
+      drawBackground(ctx);
+        drawBackground(ctx2);
+          drawBackground(ctx4);
+      drawCircles(400,450,ctx);
+      drawCircles(400,300,ctx2);
+      drawCircles(400,150,ctx4);
+
+      let src1 = cv.imread("canvas");
+      let src2 = cv.imread("canvas2");
+      let src4 = cv.imread("canvas4");
+      let dst = new cv.Mat();
+      cv.add(src1,src2,dst);
+      //cv.add(src4,dst,dst);
+      //src1.delete(); src2.delete(); dst.delete(); mask.delete();
+      ctx3.clearRect(0, 0, canvas3.width, canvas3.height);
+      //canvas3.width = dst.width;
+      //canvas3.height = dst.height;
+      cv.imshow('canvas3', dst);
+      shift += 0.3;
+      setTimeout(loop,dt);
+    }
+loop();
+    function drawCircle(x,y,color,r,canvasCtx){
+      canvasCtx.beginPath();
+      canvasCtx.arc(x,y, r, 0, 2 * Math.PI);
+      canvasCtx.strokeStyle = color;
+      canvasCtx.stroke();
+      canvasCtx.closePath();
+    }
+    var shift = 0;
+    function drawCircles(x,y,canvasCtx){
+    for(var i = 0; i <400;i++){
+      var toSubs = 1-i/10+shift
+      drawCircle(x,y,heatMapRGBForValue((Math.sin(toSubs)+1)/2),i,canvasCtx);
+    }
+  }
+
+    function heatMapColorforValue(value){
+      var h = (1.0 - value) * 240
+      return "hsl(" + h + ", 100%, 16.6666%)";
+      //return "hsl(" + h + "," + h + "," + h + ")";
+    }
+
+    function heatMapRGBForValue(value){
+      var h = value*255/3;
+      return "rgb(" + h + "," + h + "," + h + ")";
+    }
+
+    var cx = 400;
+    var cy = 300;
+    function drawPoint(x,y,color){
+      ctx.beginPath();
+      ctx.rect(x,y,1,1);
+      ctx.fillStyle = color;
+      ctx.fill();
+      ctx.closePath();
+    }
+    /*for(var i = 0; i < canvas.width; i++){
+      for(var j = 0; j < canvas.height; j++){
+        var dist = Math.sqrt(Math.abs(cx-i)*Math.abs(cx-i)+Math.abs(cy-j)*Math.abs(cy-j));
+        var height = (Math.sin(dist/50.0)+1.0)/2.0;
+        if(dist<100){
+          console.log("done");
+          drawPoint(i,j,height);
+        }
+      }
+    }*/
+</script>
+</html>

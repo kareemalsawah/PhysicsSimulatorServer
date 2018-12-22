@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Examples</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/bootstrap.css">
+</head>
+<body>
+
+<ul id="navBar">
+<li><a href="/">Simulate</a></li>
+<li><a class="active" href="#">Examples</a></li>
+<li><a href="documentation">Documentation</a></li>
+</ul>
+
+<div class="examplesList">
+		<a href="circularMotion">
+			<div class="scene sideBySide">
+				<div class="image">
+					<img src="images/circularMotion.png"></img>
+				</div>
+				<h3 class="title">Uniform Circular Motion</h3>
+			</div>
+		</a>
+
+		<a href="SHM">
+			<div class="scene sideBySide">
+				<div class="image">
+					<img src="images/SHMSpring.png"></img>
+				</div>
+				<h3 class="title">Simple Harmonic Motion (Spring)</h3>
+			</div>
+		</a>
+
+		<a href="SHMPendulum">
+			<div class="scene sideBySide">
+				<div class="image">
+					<img src="images/SHMPendulum.png"></img>
+				</div>
+				<h3 class="title">Simple Harmonic Motion (Pendulum)</h3>
+			</div>
+		</a>
+
+		<a href="SHMMultiplePendulums">
+			<div class="scene sideBySide">
+				<div class="image">
+					<img src="images/SHMMultiplePendulums.jpg"></img>
+				</div>
+				<h3 class="title">Multiple pendulums different L</h3>
+			</div>
+		</a>
+
+		<a href="DoublePendulum">
+			<div class="scene sideBySide">
+				<div class="image">
+					<img src="images/DoublePendulum.jpg"></img>
+				</div>
+				<h3 class="title">Double Pendulum</h3>
+			</div>
+		</a>
+
+		<a href="dampedOscillations">
+			<div class="scene sideBySide">
+				<div class="image">
+					<img src="images/dampedOscillations.png"></img>
+				</div>
+				<h3 class="title">Damped Oscillations</h3>
+			</div>
+		</a>
+
+		<a href="forcedOscillations">
+			<div class="scene sideBySide">
+				<div class="image">
+					<img src="images/forcedOscillations.png"></img>
+				</div>
+				<h3 class="title">Forced Oscillations</h3>
+			</div>
+		</a>
+
+		<a href="TransverseWave">
+			<div class="scene sideBySide">
+				<div class="image">
+					<img src="images/TransverseWave.png"></img>
+				</div>
+				<h3 class="title">Standing Wave</h3>
+			</div>
+		</a>
+</div>
+<h3>Custom Examples:</h3>
+<div class="examplesList">
+	<a href="wavesPlayground_2">
+		<div class="scene sideBySide">
+			<div class="image">
+				<img src="images/beats.jpg"></img>
+			</div>
+			<h3 class="title">1D Waves</h3>
+		</div>
+	</a>
+	<a href="2dWaves">
+		<div class="scene sideBySide">
+			<div class="image">
+				<img src="images/waveDiffraction.jpg"></img>
+			</div>
+			<h3 class="title">2D Waves</h3>
+		</div>
+	</a>
+</div>
+
+<h3>Real-life Examples:</h3>
+<div class="examplesList">
+	<a href="SHMVideoProof">
+		<div class="scene sideBySide">
+			<div class="image">
+				<img src="images/SHMVideo.jpg"></img>
+			</div>
+			<h3 class="title">Simple Harmonic Motion</h3>
+		</div>
+	</a>
+	<a href="SHMDampedVideoProof">
+		<div class="scene sideBySide">
+			<div class="image">
+				<img src="images/SHMDampedVideo.jpg"></img>
+			</div>
+			<h3 class="title">Damped Oscillations</h3>
+		</div>
+	</a>
+</div>
+</body>
+<script>
+</script>
+<style>
+.image{
+border-radius:15px;
+margin-top:20px;
+}
+.scene{
+	text-align:center;
+	background-color:#ccc;
+	margin:40px;
+	margin-left:3vw;
+	border-radius:5px;
+	width:80%;
+	font-size:15px;
+}
+.right{
+margin-left:150px;
+}
+
+img{
+height:200px;
+width:300px;
+padding:20px;
+border-radius:10px;
+}
+a { color: inherit; }
+.examplesList{
+	  display: grid;
+	  grid-template-columns: auto auto auto;
+	  grid-gap: 10px;
+}
+
+@media only screen and (max-width: 1300px) {
+  .examplesList {
+    grid-template-columns: auto auto;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  .examplesList {
+    grid-template-columns: auto;
+  }
+}
+</style>
+</html>

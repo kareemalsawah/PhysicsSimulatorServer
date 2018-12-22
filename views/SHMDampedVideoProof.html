@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Damped SHM Video</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/bootstrap.css">
+<link rel="stylesheet" href="css/fonts/font-awesome-4.3.0/css/font-awesome.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+
+<div id="wrapper">
+<ul id="navBar">
+<li><a class="active" href="#">Simulate</a></li>
+<li><a href="examples">Examples</a></li>
+<li><a href="documentation">Documentation</a></li>
+<li style="float:right;"><a id="boardA" href="#" onclick="boardSwitch();">Board Mode</a></li>
+<li style="float:right;"><a href="#" class="btn btn-primary" id="undoBtn" onclick="undo();">Undo</a></li>
+</ul>
+
+
+
+<div class="sideBySide" id="canvasDiv">
+<canvas id="canvas"></canvas>
+</div>
+
+<div class="sideBySide" id="placementOptions">
+<div id="controls">
+	<a class="sideBySide buttonControls" id="pause" onclick='control("pause");pauseVideo();'>&#9632;</a>
+	<a class="sideBySide buttonControls" id="play" onclick='control("play");playVideo();'>&#10148;</a>
+	<a class="sideBySide buttonControls" style="display:none;" id="nextFrame" onclick='control("nextFrame");stepVideo();'>&#10148;&#124;</a>
+</div>
+
+<video class="proofVideo" id="video1" class="sideBySide">
+	 <source src="videos/SHMDamped1.mp4" type="video/mp4">
+	 Your browser does not support HTML5 video.
+ </video>
+
+</div>
+<div id="bodyWrapper" style="display:none;">
+<div class="sideBySide" id="placementOptions">
+<div id="controls">
+	<a class="sideBySide buttonControls" id="pause" onclick='control("pause");'>&#9632;</a>
+	<a class="sideBySide buttonControls" id="play" onclick='control("play");'>&#10148;</a>
+	<a class="sideBySide buttonControls" id="nextFrame" onclick='control("nextFrame");'>&#10148;&#124;</a>
+</div>
+<br>
+<ul class="topnav" id="navBar2">
+<li><a id="placeObjectsNav" class="active navBar2Li" onclick='domShow("place");'>Main</a></li>
+<li><a id="GraphNav" class="navBar2Li" onclick='domShow("graph");'>Graph</a></li>
+<li><a id="VariablesNav" class="navBar2Li" onclick='domShow("variables");'>Variables</a></li>
+<li><a id="TimeNav" class="navBar2Li" onclick='domShow("time");'>Time</a></li>
+<li><a id="SettingsNav" class="navBar2Li" onclick='domShow("settings");'>Settings</a></li>
+<li><a href="#" class="icon" onclick="navbarResponsive()">
+	<i class="fa fa-bars"></i></a></li>
+</ul>
+<script>
+function navbarResponsive() {
+    var x = document.getElementById("navBar2");
+    if (x.className === "topnav") {
+        x.className += " responsive";
+    } else {
+        x.className = "topnav";
+    }
+}
+</script>
+<div class="PlacementDiv" id="placeObjectsDiv">
+	<h2 id="currentCommand">Current Command: Simulation Paused</h2>
+	<hr>
+	<div class="dropdown" id="placeDropdown">
+	  	<button class="dropbtn">Select Item to Place</button>
+	  	<div class="dropdown-content">
+		    <a onclick='showSettings("particle");'>Particle</a>
+		    <a onclick='showSettings("spring");'>Spring</a>
+		    <a onclick='showSettings("support");'>Support</a>
+		    <a onclick='showSettings("simpleRope");'>Simple Rope</a>
+		    <a onclick='showSettings("rope");'>Complex Rope</a>
+	  	</div>
+	</div>
+
+	<div class="dropdown" id="deleteDropdown">
+	  	<button class="dropbtnDelete">Delete An Item</button>
+	  	<div class="dropdown-content">
+		    <a onclick='showDeleteSettings("particle");'>Particle</a>
+		    <a onclick='showDeleteSettings("force");'>Force</a>
+	  	</div>
+	</div>
+
+	<div id="particleSettings" style="display:none;overflow-y: scroll;height:350px;">
+		<h2 class="nav2Titles">Particle</h2>
+    	<div class="row">
+			<div class="col-25">
+	        	<label>Mass</label>
+	      	</div>
+	      	<div class="col-75">
+	        	<input type="text" id="particleMass" value="1">
+	      	</div>
+	    </div>
+	    <div class="row">
+	      	<div class="col-25">
+	        	<label>Velocity</label>
+	      	</div>
+	      	<div class="col-75">
+	        	<input type="text" id="particleVelocity" value="0,0">
+	      	</div>
+	    </div>
+	    <div class="row">
+	      	<div class="col-25">
+	        	<label>Fixed</label>
+	      	</div>
+	      	<div class="col-75">
+	        	<input type="text" id="particleFixed" value="0,0">
+	      	</div>
+	    </div>
+	    <div class="row">
+	      	<div class="col-25">
+	        	<label>Radius</label>
+	      	</div>
+	      	<div class="col-75">
+	        	<input type="text" id="particleRadius" value="0.4">
+	      	</div>
+	    </div>
+	    <div class="row">
+			<div class="col-25">
+	        	<label>Color</label>
+	      	</div>
+	      	<div class="col-75">
+	        	<input type="color" id="particleColor" value="#ff0000">
+	      	</div>
+	    </div>
+		<a class="btn btn-primary" onclick='place("particle");' style="margin-top:10px;margin-bottom:20px;">Place</a>
+		<br>
+		<div class="row">
+	      	<div class="col-25">
+	        	<label>Position</label>
+	      	</div>
+	      	<div class="col-75">
+	        	<input type="text" id="particlePos" value="0,0">
+	      	</div>
+	    </div>
+		<a class="btn btn-primary" onclick='instantPlace("particle");' style="margin-top:10px;margin-bottom:5px;">Place using coordinates</a>
+		<br>
+		<a class="btn btn-danger" onclick='cancelPlacement();'>Cancel</a>
+	</div>
+
+	<div id="springSettings" style="display:none;">
+		<h2 class="nav2Titles">Spring</h2>
+		<div class="row">
+			<div class="col-25">
+	        	<label>K</label>
+	      	</div>
+	      	<div class="col-75">
+	        	<input type="text" id="springConstant" value="2">
+	      	</div>
+	    </div>
+	    <div class="row">
+			<div class="col-25">
+	        	<label>l0</label>
+	      	</div>
+	      	<div class="col-75">
+	        	<input type="text" id="springL0" value="3">
+	      	</div>
+	    </div>
+	    <div class="row">
+			<div class="col-25">
+	        	<label>Damping Constant</label>
+	      	</div>
+	      	<div class="col-75">
+	        	<input type="text" id="springDampingBeta" value="0">
+	      	</div>
+	    </div>
+	    <div class="row">
+	      	<div class="col-25">
+	        	<label>Width</label>
+	      	</div>
+	      	<div class="col-75">
+	        	<input type="text" id="springWidth" value="0.2">
+	      	</div>
+	    </div>
+	    <div class="row">
+			<div class="col-25">
+	        	<label>Color</label>
+	      	</div>
+	      	<div class="col-75">
+	        	<input type="color" id="springColor" value="#00ff00">
+	      	</div>
+	    </div>
+		<a class="btn btn-primary" onclick='place("spring");' style="margin-top:10px;margin-bottom:5px;">Place</a>
+		<br>
+		<a class="btn btn-danger" onclick='cancelPlacement();'>Cancel</a>
+	</div>
+
+	<div id="simpleRopeSettings"  style="display:none;overflow-y: scroll;height:350px;">
+	<h2 class="nav2Titles">Simple Rope Settings</h2>
+		<div class="row">
+			<div class="col-25">
+	        	<label>Veclocity</label>
+	      	</div>
+	      	<div class="col-75">
+	        	<input type="text" id="simpleRopeVelocity" value="0,0,0,0">
+	      	</div>
+	    </div>
+	    <div class="row">
+			<div class="col-25">
+	        	<label>Ends Fixed</label>
+	      	</div>
+	      	<div class="col-75">
+	        	<input type="text" id="simpleRopeFixed" value="1,1,0,0">
+	      	</div>
+	    </div>
+	    <div class="row">
+			<div class="col-25">
+	        	<label>Internals Fixed</label>
+	      	</div>
+	      	<div class="col-75">
+	        	<input type="text" id="simpleRopeFixedInternal" value="0,0">
+	      	</div>
+	    </div>
+	    <div class="row">
+			<div class="col-25">
+	        	<label>Mass</label>
+	      	</div>
+	      	<div class="col-75">
+	        	<input type="text" id="simpleRopeMass" value="1">
+	      	</div>
+	    </div>
+	    <div class="row">
+			<div class="col-25">
+	        	<label>Particle Width</label>
+	      	</div>
+	      	<div class="col-75">
+	        	<input type="text" id="simpleRopeParticleWidth" value="0.1">
+	      	</div>
+	    </div>
+	    <div class="row">
+			<div class="col-25">
+	        	<label>Num of sections</label>
+	      	</div>
+	      	<div class="col-75">
+	        	<input type="text" id="simpleRopeSections" value="10">
+	      	</div>
+	    </div>
+	    <div class="row">
+			<div class="col-25">
+	        	<label>K</label>
+	      	</div>
+	      	<div class="col-75">
+	        	<input type="text" id="simpleRopeK" value="10000">
+	      	</div>
+	    </div>
+	    <div class="row">
+			<div class="col-25">
+	        	<label>Beta</label>
+	      	</div>
+	      	<div class="col-75">
+	        	<input type="text" id="simpleRopeBeta" value="0">
+	      	</div>
+	    </div>
+	    <div class="row">
+			<div class="col-25">
+	        	<label>Particle Color</label>
+	      	</div>
+	      	<div class="col-75">
+	        	<input type="color" id="simpleRopeParticleColor" value="#ff0000">
+	      	</div>
+	    </div>
+	    <div class="row">
+			<div class="col-25">
+	        	<label>Spring color</label>
+	      	</div>
+	      	<div class="col-75">
+	        	<input type="color" id="simpleRopeSpringColor" value="#00ff00">
+	      	</div>
+	    </div>
+		<a class="btn btn-primary" onclick='placeRope("simple");' style="margin-top:10px;margin-bottom:5px;">Place</a>
+		<br>
+		<a class="btn btn-danger" onclick='cancelPlacement();'>Cancel</a>
+	</div>
+
+	<div id="ropeSettings"  style="display:none;overflow-y: scroll;height:350px;">
+	<h2 class="nav2Titles">Complex Rope Settings</h2>
+		<div class="row">
+			<div class="col-25">
+	        	<label>Veclocity</label>
+	      	</div>
+	      	<div class="col-75">
+	        	<input type="text" id="ropeVelocity" value="0,0,0,0">
+	      	</div>
+	    </div>
+	    <div class="row">
+			<div class="col-25">
+	        	<label>Ends Fixed</label>
+	      	</div>
+	      	<div class="col-75">
+	        	<input type="text" id="ropeFixed" value="1,1,0,0">
+	      	</div>
+	    </div>
+	    <div class="row">
+			<div class="col-25">
+	        	<label>Internals Fixed</label>
+	      	</div>
+	      	<div class="col-75">
+	        	<input type="text" id="ropeFixedInternal" value="0,0">
+	      	</div>
+	    </div>
+	    <div class="row">
+			<div class="col-25">
+	        	<label>Mass</label>
+	      	</div>
+	      	<div class="col-75">
+	        	<input type="text" id="ropeMass" value="1">
+	      	</div>
+	    </div>
+	    <div class="row">
+			<div class="col-25">
+	        	<label>Width</label>
+	      	</div>
+	      	<div class="col-75">
+	        	<input type="text" id="ropeWidth" value="0.2">
+	      	</div>
+	    </div>
+	    <div class="row">
+			<div class="col-25">
+	        	<label>Particle Width</label>
+	      	</div>
+	      	<div class="col-75">
+	        	<input type="text" id="ropeParticleWidth" value="0.1">
+	      	</div>
+	    </div>
+	    <div class="row">
+			<div class="col-25">
+	        	<label>Num of sections</label>
+	      	</div>
+	      	<div class="col-75">
+	        	<input type="text" id="ropeSections" value="10">
+	      	</div>
+	    </div>
+	    <div class="row">
+			<div class="col-25">
+	        	<label>K</label>
+	      	</div>
+	      	<div class="col-75">
+	        	<input type="text" id="ropeK" value="10000">
+	      	</div>
+	    </div>
+	    <div class="row">
+			<div class="col-25">
+	        	<label>Beta</label>
+	      	</div>
+	      	<div class="col-75">
+	        	<input type="text" id="ropeBeta" value="0">
+	      	</div>
+	    </div>
+	    <div class="row">
+			<div class="col-25">
+	        	<label>Particle Color</label>
+	      	</div>
+	      	<div class="col-75">
+	        	<input type="color" id="ropeParticleColor" value="#ff0000">
+	      	</div>
+	    </div>
+	    <div class="row">
+			<div class="col-25">
+	        	<label>Spring color</label>
+	      	</div>
+	      	<div class="col-75">
+	        	<input type="color" id="ropeSpringColor" value="#00ff00">
+	      	</div>
+	    </div>
+		<a class="btn btn-primary" onclick='placeRope("complex");' style="margin-top:10px;margin-bottom:5px;">Place</a>
+		<br>
+		<a class="btn btn-danger" onclick='cancelPlacement();'>Cancel</a>
+	</div>
+
+	<div id="supportSettings" style="display:none;">
+		<h2 class="nav2Titles">Support</h2>
+		<div class="row">
+			<div class="col-25">
+	        	<label>K</label>
+	      	</div>
+	      	<div class="col-75">
+	        	<input type="text" id="supportConstant" value="10000">
+	      	</div>
+	    </div>
+	    <div class="row">
+			<div class="col-25">
+	        	<label>Damping Constant</label>
+	      	</div>
+	      	<div class="col-75">
+	        	<input type="text" id="supportDampingBeta" value="0">
+	      	</div>
+	    </div>
+	    <div class="row">
+	      	<div class="col-25">
+	        	<label>Width</label>
+	      	</div>
+	      	<div class="col-75">
+	        	<input type="text" id="supportWidth" value="0.2">
+	      	</div>
+	    </div>
+	    <div class="row">
+			<div class="col-25">
+	        	<label>Color</label>
+	      	</div>
+	      	<div class="col-75">
+	        	<input type="color" id="supportColor" value="#00ff00">
+	      	</div>
+	    </div>
+		<a class="btn btn-primary" onclick='place("support");' style="margin-top:10px;margin-bottom:5px;">Place</a>
+		<br>
+		<a class="btn btn-danger" onclick='cancelPlacement();'>Cancel</a>
+	</div>
+
+
+
+
+
+
+	<div class="PlacementDiv" id="particleDeleteSettings" style="display:none;overflow-y: scroll;height:350px;">
+		<h2 class="nav2Titles">Delete Particle</h2>
+		<div class="row">
+				<div class="col-25">
+					<label>Particle Number:</label>
+				</div>
+				<div class="col-75">
+					<input type="text" id="deleteParticleNumber" value="">
+				</div>
+		</div>
+		<a class="btn btn-danger" onclick='deleteParticle();'>Delete</a>
+		<a class="btn btn-danger" onclick='cancelDelete();'>Cancel</a>
+	</div>
+
+	<div id="forceDeleteSettings" style="display:none;overflow-y: scroll;height:350px;">
+		<h2 class="nav2Titles">Delete Force</h2>
+		<div class="row">
+				<div class="col-25">
+					<label>First Particle:</label>
+				</div>
+				<div class="col-75">
+					<input type="text" id="deleteForce1" value="">
+				</div>
+		</div>
+		<div class="row">
+				<div class="col-25">
+					<label>Second Particle:</label>
+				</div>
+				<div class="col-75">
+					<input type="text" id="deleteForce2" value="">
+				</div>
+		</div>
+		<a class="btn btn-danger" onclick='deleteForce();'>Delete</a>
+		<a class="btn btn-danger" onclick='cancelDelete();'>Cancel</a>
+	</div>
+
+</div>
+
+<div id="GraphDiv">
+	<canvas id="graphCanvas" width="450" height="300" style="margin-top:-5px;"></canvas>
+    <div class="row">
+      	<div class="col-10 sideBySide">
+        	<label>Y range:</label>
+      	</div>
+      	<div class="rangeInput">
+	      	<div class="col-30 sideBySide">
+	        	<input type="text" class="rangeDefine" id="minGraphY" value="-10" size="2">
+	      	</div>
+	      	<div class="col-20 slidecontainer sideBySide">
+				 	<input type="range" min="-10" max="10" value="0" step = "0.1" class="slider" id="rangeY">
+			</div>
+
+	      	<div class="col-30 sideBySide">
+	        	<input type="text" class="rangeDefine" id="maxGraphY" value="10" size="2">
+	      	</div>
+      	</div>
+    </div>
+    <div class="row">
+      	<div class="col-10 sideBySide">
+        	<label>Y scale:</label>
+      	</div>
+      	<div class="rangeInput">
+	      	<div class="col-30 sideBySide">
+	        	<input type="text" class="rangeDefine" id="minScaleY" value="0.1" size="2">
+	      	</div>
+	      	<div class="col-20 slidecontainer sideBySide">
+				 	<input type="range" min="0.1" max="10" value="1" step = "0.1" class="slider" id="scaleY">
+			</div>
+
+	      	<div class="col-30 sideBySide">
+	        	<input type="text" class="rangeDefine" id="maxScaleY" value="10" size="2">
+	      	</div>
+      	</div>
+    </div>
+    <div class="row">
+      	<div class="col-10 sideBySide">
+        	<label>X range:</label>
+      	</div>
+      	<div class="rangeInput">
+	      	<div class="col-30 sideBySide">
+	        	<input type="text" class="rangeDefine" id="minGraphX" value="-10" size="2">
+	      	</div>
+	      	<div class="col-20 slidecontainer sideBySide">
+				 	<input type="range" min="-10" max="10" value="0" step = "0.1" class="slider" id="rangeX">
+			</div>
+
+	      	<div class="col-30 sideBySide">
+	        	<input type="text" class="rangeDefine" id="maxGraphX" value="10" size="2">
+	      	</div>
+      	</div>
+    </div>
+    <div class="row">
+      	<div class="col-10 sideBySide">
+        	<label>X scale:</label>
+      	</div>
+      	<div class="rangeInput">
+	      	<div class="col-30 sideBySide">
+	        	<input type="text" class="rangeDefine" id="minScaleX" value="0.1" size="2">
+	      	</div>
+	      	<div class="col-20 slidecontainer sideBySide">
+				 	<input type="range" min="0.1" max="10" value="1" step = "0.1" class="slider" id="scaleX">
+			</div>
+
+	      	<div class="col-30 sideBySide">
+	        	<input type="text" class="rangeDefine" id="maxScaleX" value="10" size="2">
+	      	</div>
+      	</div>
+    </div>
+</div>
+
+<div id="VariablesDiv" style="display:none;overflow-y: scroll;height:450px;">
+	<div id="variables">
+
+	</div>
+	<a class="btn btn-success" onclick="addNewDefaultVar();" style="float:right;margin-right:20px;">Add</a>
+</div>
+
+<div id="TimeDiv" style="display:none;">
+<h2 class="nav2Titles">Time Controls:</h2>
+
+	<div class="row">
+		<div class="col-25" style="width:25%;">
+        	<label>dt:</label>
+      	</div>
+      	<div class="sideBySide" style="margin-right:10px;margin-top:7px;">
+        	<input type="text" id="dtSetting">
+      	</div>
+	<a class="sideBySide btn btn-primary" style="margin-top:7px;" onclick="dtGeneral = parseFloat(document.getElementById('dtSetting').value);">Update dt</a>
+	</div>
+	<div class="row">
+      	<div class="col-25 sideBySide" style="width:25%;">
+        	<label>Time speed:</label>
+      	</div>
+      	<div class="col-20 slidecontainer sideBySide" style="margin-top:17px;">
+			 	<input type="range" min="0.1" max="10" value="1" step = "0.1" class="slider" id="timeSpeed">
+		</div>
+	<a class="btn btn-primary sideBySide" style="margin-top:7px;" onclick="resetDt();">Reset to natural time</a>
+    </div>
+    <h1 style="margin-top:40px;">Stopwatch:</h1>
+    <div class="row stopwatchControls">
+    <a class="btn btn-primary sideBySide" id="stopwatchBtn" onclick="timer('start');">Start</a>
+    <a class="btn btn-primary sideBySide" id="stopwatchBtn" onclick="timer('pause');">Stop</a>
+    <a class="btn btn-primary sideBySide" id="stopwatchBtn" onclick="timer('reset');">Reset</a>
+    </div>
+    <div class="row">
+    <h2 id="timer">00:00.000</h2>
+    </div>
+
+
+</div>
+<div id="SettingsDiv" style="display:none;overflow-y: scroll;height:450px;">
+	<h2 class="nav2Titles">Settings:</h2>
+	<div class="row">
+		<div class="col-25">
+        	<label>Gravity:</label>
+      	</div>
+      	<div class="col-75">
+        	<input type="text" id="gravitySetting">
+      	</div>
+	</div>
+	<div class="row">
+		<div class="col-25">
+        	<label>Linear Damping:</label>
+      	</div>
+      	<div class="col-75">
+        	<input type="text" id="linearDampingSetting">
+      	</div>
+	</div>
+
+	<div class="row">
+		<div class="col-25">
+        	<label>Type of time-integration:</label>
+      	</div>
+      	<div class="col-75">
+        	<!--<input type="text" id="integrationType">-->
+					<select id="integrationType">
+					  <option value="ExplicitEuler">Explicit Euler</option>
+					  <option value="SymplecticEuler">Symplectic Euler</option>
+					  <option value="ImplicitEuler">Implicit Euler</option>
+					  <option value="LinearizedImplicit">Linearized Implicit</option>
+					  <option value="ImplicitExplicit">Implicit Explicit</option>
+					  <option value="ImplicitSymplectic">Implicit Symplectic</option>
+					</select>
+      	</div>
+	</div>
+
+	<div class="row">
+		<div class="col-25">
+        	<label>Minimum convergence:</label>
+      	</div>
+      	<div class="col-75">
+        	<input type="text" id="convergenceRate">
+      	</div>
+	</div>
+
+	<div class="row">
+		<div class="col-25">
+        	<label>Maximum loops to reach convergence:</label>
+      	</div>
+      	<div class="col-75">
+        	<input type="text" id="maxLoops">
+      	</div>
+	</div>
+	<a class="btn btn-primary" onclick="saveSettings();" style="margin-top:10px;margin-bottom:20px;">Change and save settings</a>
+	<h2 class="nav2Titles">Simulation Canvas:</h2>
+	<div class="row">
+      	<div class="col-10 sideBySide">
+        	<label>X Pos:</label>
+      	</div>
+      	<div class="rangeInput">
+	      	<div class="col-30 sideBySide">
+	        	<input type="text" class="rangeDefine" id="minSimulationX" value="-10" size="2">
+	      	</div>
+	      	<div class="col-20 slidecontainer sideBySide">
+				 	<input type="range" min="-10" max="10" value="0" step = "0.1" class="slider" id="simulationX">
+			</div>
+
+	      	<div class="col-30 sideBySide">
+	        	<input type="text" class="rangeDefine" id="maxSimulationX" value="10" size="2">
+	      	</div>
+      	</div>
+    </div>
+    <div class="row">
+      	<div class="col-10 sideBySide">
+        	<label>Y Pos:</label>
+      	</div>
+      	<div class="rangeInput">
+	      	<div class="col-30 sideBySide">
+	        	<input type="text" class="rangeDefine" id="minSimulationY" value="-10" size="2">
+	      	</div>
+	      	<div class="col-20 slidecontainer sideBySide">
+				 	<input type="range" min="-10" max="10" value="0" step = "0.1" class="slider" id="simulationY">
+			</div>
+
+	      	<div class="col-30 sideBySide">
+	        	<input type="text" class="rangeDefine" id="maxSimulationY" value="10" size="2">
+	      	</div>
+      	</div>
+    </div>
+    <div class="row">
+      	<div class="col-10 sideBySide">
+        	<label>Scale:</label>
+      	</div>
+      	<div class="rangeInput">
+	      	<div class="col-30 sideBySide">
+	        	<input type="text" class="rangeDefine" id="minSimulationScale" value="0.1" size="2">
+	      	</div>
+	      	<div class="col-20 slidecontainer sideBySide">
+				 	<input type="range" min="0.1" max="10" value="1" step = "0.1" class="slider" id="simulationScale">
+			</div>
+
+	      	<div class="col-30 sideBySide">
+	        	<input type="text" class="rangeDefine" id="maxSimulationScale" value="10" size="2">
+	      	</div>
+      	</div>
+    </div>
+
+    <h2 class="nav2Titles" style="margin-top:40px;margin-bottom:0px;">Download/Upload:</h2>
+    <br>
+	<a class="btn btn-primary" onclick="down();" style="margin-bottom:10px;">Save and Download</a>
+	<br>
+	<input type="file" id="fileToLoad">
+	<a class="btn btn-primary" onclick="loadFileAsText();">Upload Saved Scene</a>
+
+</div>
+
+
+</div>
+
+<div id="myMsgBox" class="msgBox">
+  <div class="msgBox-content">
+    <span onclick="closeMsg();" class="close">&times;</span>
+		<div class="row">
+    <h4 class="msgBoxTitles" style="float:left;">Name</h4>
+    <input type="text" class="msgBoxText" id="name"></input>
+	</div>
+    <br>
+		<div class="row">
+    <h4 class="msgBoxTitles" style="float:left;">Particle Number</h4>
+    <input  type="text" class="msgBoxText" id="parNum"></input>
+	</div>
+    <br>
+		<div class="row">
+    <h4 class="msgBoxTitles" style="float:left;">To Graph</h4>
+    <select id="toGraph">
+  		<option value="x">X-Position</option>
+  		<option value="y">Y-Position</option>
+  		<option value="d">Distance to origin</option>
+  		<option value="vx">X-Velocity</option>
+  		<option value="vy">Y-Velocity</option>
+  		<option value="v">Speed</option>
+  		<option value="KE">Kinetic Energy</option>
+	</select>
+</div>
+    <br>
+<div class="row">
+    <h4 class="msgBoxTitles" style="float:left;">Y-shift</h4>
+    <input type="text" class="msgBoxText" id="graphYShift"></input>
+
+	</div>
+	<br>
+<div class="row">
+    <h4 class="msgBoxTitles" style="float:left;">Color</h4>
+    <input type="color" id="colorpicker" value="#ff0000">
+	</div>
+	<br>
+    <div id="toAdd"></div>
+  </div>
+</div>
+
+<div id="boardMode" class="boardBox">
+<canvas id="boardCanvas"></canvas>
+</div>
+</div>
+</div>
+
+<h1 id="orientation-error">Please use this application only in landscape mode (change the settings in the phone to allow for screen rotation and use the application in landscape then reload the page)</h1>
+</body>
+
+<script>
+function resizeCanvasToDisplaySize(canv) {
+   // look up the size the canv is being displayed
+   var width = canv.clientWidth;
+   var height = canv.clientHeight;
+   // If it's resolution does not match change it
+   if (canv.width !== width || canv.height !== height) {
+     canv.width = width;
+     canv.height = height;
+     return true;
+   }
+
+   return false;
+}
+
+resizeCanvasToDisplaySize(document.getElementById("canvas"));
+resizeCanvasToDisplaySize(document.getElementById("graphCanvas"));
+resizeCanvasToDisplaySize(document.getElementById("boardCanvas"));
+document.getElementById("GraphDiv").style = "display:none;";
+document.getElementById("boardMode").style = "display:none;";
+</script>
+<script src="js/board.js"></script>
+<script src="js/math.min.js"></script>
+<script src="js/dom.js"></script>
+<script src="js/helper.js"></script>
+<script src="js/forces.js"></script>
+<script src="js/objects.js"></script>
+<script src="js/main.js"></script>
+<script>
+/*Initalize particles,edges,forces, and scene.
+ Note: scene always starts with at least 2 forces simpleGravity, and linearDamping. Their settings can be changed
+ from DOM from the settings section.*/
+function createObjects(){
+	var particles = [];
+	particles.push(new ball(0,3,0,0,[true,true],1,0.4,"red"));
+	particles.push(new ball(0,-1,0,0,[false,false],0.3,0.4,"red"));
+	/*var w = 2;
+	var mBig = 1000000;
+	var kBig = mBig*w*w/2;
+	var rad = 1;
+	var vStart = rad*w;
+	particles.push(new ball(8,0,0,0,[false,true],1,0.4,"red"));
+	particles.push(new ball(1,0,0,0,[false,true],1,0.4,"red"));
+	particles.push(new ball(-3,0,0,vStart,[false,false],mBig/2,0.4,"red"));
+	particles.push(new ball(-4,0,0,0,[true,true],mBig/2,0.4,"red"));
+	*/var edges = [];
+	edges.push(new edge(0,1,0.2,"green"));
+	/*edges.push(new edge(0,1,0.2,"green"));
+	edges.push(new edge(1,2,0.2,"green"));
+	edges.push(new edge(2,3,0.2,"green"));*/
+	var gravityVector = [];
+	gravityVector.push(0.0);
+	gravityVector.push(0.0);
+	var simpleGravityForce = new SimpleGravity(gravityVector);
+	var linearDampingForce = new DragDampingForce(0.4);
+	var springForce = new SpringForce(0,89.59,3,0.0);
+	/*var springForce = new SpringForce(0,10,6,0.0);
+	var springForce2 = new SpringForce(1,300,4,0.0);
+	var springForce3 = new SpringForce(2,3000*mBig,rad,0.0);
+	var gravityForce = new GravitationalForce(0,1,20000);*/
+	forceTypes = [];
+	forceTypes.push(simpleGravityForce);
+	forceTypes.push(linearDampingForce);
+	forceTypes.push(springForce);
+	/*forceTypes.push(springForce);
+	forceTypes.push(springForce2);
+	forceTypes.push(springForce3);*/
+	//forceTypes.push(simpleGravityForce);
+	//forceTypes.push(springForce);
+	scene = new Scene(particles,edges,"ImplicitSymplectic",forceTypes);
+	//var ropeTest = new rope([-6,0],[8,0],[0,0],[0,0],0.2,[[true,false],[true,false]],0.1,0.1,"red","green",200,15,1.0,[true,false]);
+	//var ropeTest = new simpleRope([-6,0],[8,0],[0,0],[0,0],[[true,false],[true,false]],0.01,0.1,"red","green",1000,20,1.0,[true,false]);
+	//scene.particles[29].pos = [10,0];
+	scene.startEnergy = scene.computeEnergy();
+	//scene.draw();
+}
+
+createObjects();
+loop();
+setSavedValues();
+
+var video1 = document.getElementById("video1");
+
+function playVideo(){
+	video1.play();
+}
+
+function pauseVideo(){
+	video1.pause();
+}
+
+function stepVideo(){
+
+}
+
+</script>
+</html>

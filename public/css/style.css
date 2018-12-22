@@ -1,0 +1,431 @@
+.sideBySide{
+	float:left;
+}
+#placementOptions{
+	margin-left:2vw;
+	width:35vw;
+}
+#canvasDiv{
+	width:60vw;
+	height:90vh;
+}
+canvas{
+	width:100%;
+	height:100%;
+}
+body{
+    background-color:#eee;
+    font-family:arial;
+		font-size:1.5vw;
+}
+
+#navBar {
+    list-style-type: none;
+    margin: 0;
+    margin-top:-10px;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+    margin-bottom:10px;
+    padding-right:100px;
+		font-size:1.5vw;
+		z-index:2;
+		position:relative;
+}
+
+#navBar2{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+    margin-bottom:20px;
+    margin-left:-15px;
+		font-size:1vw;
+}
+.navBar2Li{
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+}
+
+.buttonControls{
+    margin-left:3.3vw;
+    background-color:#4CAF50;
+    padding:0.8vw;
+    padding-left:3vw;
+    padding-right:3vw;
+    color:white;
+}
+
+@media screen and (max-width: 1200px) {
+	#placementOptions{
+		margin-left:4vw;
+		width:30%;
+	}
+	#navBar2{
+		font-size:0.8vw;
+	}
+
+	.buttonControls{
+		padding-left:2vw;
+    padding-right:2vw;
+
+	}
+	#canvasDiv{
+		width:60vw;
+		height:90vh;
+	}
+}
+
+.topnav .icon {
+  display: none;
+}
+
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 30px;
+    text-decoration: none;
+}
+
+li a:hover {
+    background-color: #111;
+}
+.active{
+	background-color:#111;
+}
+
+
+
+.dropbtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px;
+    font-size: 2vw;
+    border: none;
+    cursor: pointer;
+}
+
+.dropbtnDelete {
+    background-color: #DD0000;
+    color: white;
+    padding: 16px;
+    font-size: 2vw;
+    border: none;
+    cursor: pointer;
+		margin-top:5vh;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #3e8e41;
+}
+
+#currentCommand{
+    margin-left:0px;
+    margin-top:10px;
+    font-size:1.5vw;
+}
+
+input[type=text], select, textarea {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+}
+
+.col-25 {
+    float: left;
+    width: 40%;
+    margin-top: 6px;
+}
+
+.col-75 {
+    float: left;
+    width: 60%;
+    margin-top: 6px;
+}
+
+.col-10 {
+    float: left;
+    width: 20%;
+    margin-top: 6px;
+}
+
+.col-30 {
+    float: left;
+    width: 20%;
+    margin-top: 6px;
+}
+
+.col-20 {
+    float: left;
+    width: 40%;
+    margin-top: 20px;
+    margin-left:-20px;
+    margin-right:10px;
+}
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+label {
+    padding: 12px 12px 12px 0;
+    display: inline-block;
+}
+
+#controls{
+    margin-bottom:30px;
+}
+
+
+
+
+.slider {
+    -webkit-appearance: none;
+    width: 15vw;
+    height: 1vw;
+    border-radius: 5px;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+		margin-left: -0.8vw;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 1.3vw;
+    height: 1.3vw;
+    border-radius: 50%;
+    background: #4CAF50;
+    cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+    width: 1.3vw;
+    height: 1.3vw;
+    border-radius: 50%;
+    background: #4CAF50;
+    cursor: pointer;
+}
+
+.msgBox {
+		display:none; /*Hidden by default*/
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 2%; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.msgBox-content {
+	overflow: auto;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+		height:80%;
+}
+
+.msgBoxText{
+    height:15px;
+    margin-top:8px;
+    width:20%;
+}
+
+#toGraph{
+    margin-top:10px;
+    width:20%;
+}
+
+#colorpicker{
+    margin-top:15px;
+    width:20%;
+}
+
+.msgBoxTitles{
+    width:10%;
+		margin-bottom:2%;
+}
+/* The Close Button */
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.variablesElems{
+    margin-right:10px;
+    margin-top:5px;
+}
+
+#variablesElemsBtn{
+    padding:5px;
+    margin-right:5px;
+		margin-top:1vw;
+		font-size:1.5vw;
+}
+
+.colorBlock{
+    width:1vw;
+    height:1vw;
+    margin-top:1.5vw;
+}
+
+.varNameState{
+    width:32%;
+}
+.varName{
+    font-size:2vw;
+    margin-right:5px;
+    margin-top:3px;
+}
+.state{
+    margin-top:10px;
+}
+.variablesTitle{
+    padding-bottom:30px;
+    padding-top:10px;
+    padding-left:5px;
+    margin-top:10px;
+    border-style: solid;
+    border-color:black;
+    border-width:1px;
+    border-radius:3px;
+		overflow:auto;
+}
+
+.btn-success{
+    margin-top:10px;
+}
+
+
+#stopwatchBtn{
+    margin-left:0.5vw;
+    width:3vw;
+		font-size:1.3vw;
+}
+.stopwatchControls{
+	margin-top:3vw;
+	margin-bottom:-2vw;
+}
+#timer{
+    font-size:4vw;
+}
+.nav2Titles{
+    font-size:2vw;
+}
+
+#orientation-error { display: none; color:red; }
+    @media only screen and (orientation:portrait){
+        #wrapper { display:none; }
+        #orientation-error { display:block; }
+    }
+
+		@media only screen and (max-width:1200px){
+			.slider{
+				width:10vw;
+				margin-left:1.5vw;
+			}
+		}
+
+.rangeDefine{
+	width:1.2vw;
+	font-size:0.8vw;
+}
+
+.boardBox {
+		display:block; /*Hidden by default*/
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 2%; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+}
+
+#undoBtn{
+	display:none;
+	margin-top:0.7vw;
+	font-size:1vw;
+	margin-right:1vw;
+}
+#boardCanvas{
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+#bodyWrapper{
+
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
+
+.proofVideo{
+	height: 80%;
+	width: 30%;
+	position: absolute;
+	right: 5%;
+	top: 20%;
+}
