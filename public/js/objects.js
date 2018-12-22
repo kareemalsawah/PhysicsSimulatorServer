@@ -490,5 +490,11 @@ function simulationCanvas(x1,y1,x2,canvasToGraph,contextToGraph,radius,color){
 function toDownload(sceneObj,graphCanv,settings){
 	this.sceneObj = sceneObj;
 	this.graphCanv = graphCanv;
+	this.graphingTime = graphingTime;
+	this.graphing = graphing;
+	this.objectsGraphed = objectsGraphed;
+	this.shiftGraph = shiftGraph;
+	this.variables = document.getElementById("variables").innerHTML;
+	this.dtGeneral = dtGeneral;
 	this.settings = settings;
 }

@@ -414,6 +414,16 @@ function placeRope(type){
 
 function down(){
 	var toDown = JSON.stringify(new toDownload(scene,graphCanvas,0));
+	console.log(toDown);
+	var http = new XMLHttpRequest();
+	http.open('POST','/upload',true);
+	var params = 'dataObject='+toDown;
+	http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	http.onload = function(){
+
+	}
+	http.send(params);
+	window.open("/download");
 }
 
 function loadFileAsText(){
@@ -448,6 +458,8 @@ function load(data){
 			scene.forceTypes.push(new SimpleGravity(newForce.gravity));
 		}else if(newForce.type=="SpringForce"){
 			scene.forceTypes.push(new SpringForce(newForce.edgeIndex,parseFloat(newForce.k),parseFloat(newForce.l0),parseFloat(newForce.dampingBeta)));
+		}else if(newForce.type == "DragDampingForce"){
+			scene.forceTypes.push(new DragDampingForce(parseFloat(newForce.beta)));
 		}
 	}
 	scene.integrationMethod = newScene.integrationMethod;
@@ -457,7 +469,38 @@ function load(data){
 	scene.currentEnergy = newScene.currentEnergy;
 	scene.maxLoopsForImplicit = newScene.maxLoopsForImplicit;
 	scene.minConvergenceImplicit = newScene.minConvergenceImplicit;
-	//graphCanvas = dataObj.graphCanv;
+	graphingTime = 0;
+	graphing = dataObj.graphing;
+	objectsGraphed = dataObj.objectsGraphed;
+	shiftGraph = dataObj.shiftGraph;
+	movingWithTime = false;
+	var graphCanvas = new graphingCanvas(-1,6.66,19,graphCanvasDom,graphCtx,1,"gray");
+	var graphCanvObj = dataObj.graphCanv;
+	/*graphCanvas.coordTransform = graphCanvObj.coordTransform;
+	graphCanvas.x1 = graphCanvObj.x1;
+	graphCanvas.x2 = graphCanvObj.x2;
+	graphCanvas.y1 = graphCanvObj.y1;
+	graphCanvas.y2 = graphCanvObj.y2;
+	graphCanvas.shiftX = graphCanvObj.shiftX;
+	graphCanvas.shiftY = graphCanvObj.shiftY;
+	graphCanvas.currentPos = graphCanvObj.currentPos;*/
+	graphCanvas.color = graphCanvObj.color;
+	graphCanvas.radius = graphCanvObj.radius;
+	graphCanvas.graphColors = graphCanvObj.graphColors;
+	document.getElementById("variables").innerHTML = dataObj.variables;
+	dtGeneral = dataObj.dtGeneral;
+	document.getElementById("gravitySetting").value = scene.forceTypes[0].gravity;
+	document.getElementById("linearDampingSetting").value = scene.forceTypes[1].beta;
+	if(scene.integrationMethod=="ExplicitImplicit"){
+		document.getElementById("integrationType").value = "ImplicitExplicit";
+	}else if(scene.integrationMethod=="SymplecticImplicit"){
+		document.getElementById("integrationType").value = "ImplicitSymplectic";
+	}else{
+		document.getElementById("integrationType").value = scene.integrationMethod;
+	}
+	document.getElementById("convergenceRate").value = scene.minConvergenceImplicit;
+	document.getElementById("maxLoops").value = scene.maxLoopsForImplicit;
+	graphCanvas.points = graphCanvObj.points;
 }
 
 var drawingCursor = false;

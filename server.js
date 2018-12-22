@@ -2,9 +2,23 @@
 // where your node app starts
 
 // init project
-var express = require('express');
-var app = express();
+var bodyParser = require('body-parser');
+var express = require('express'),
+    app     = express(),
+    port    = parseInt(process.env.PORT, 10) || 8080;
 
+    // parse application/x-www-form-urlencoded
+    app.use(bodyParser.urlencoded({ extended: false }))
+
+    // parse application/json
+    app.use(bodyParser.json())
+
+app.listen(port);
+
+
+
+
+var fs = require('fs');
 // we've started you off with Express,
 // but feel free to use whatever libs or frameworks you'd like through `package.json`.
 
@@ -72,7 +86,32 @@ app.get('/SHMDampedVideoProof', function(request, response) {
   response.sendFile(__dirname + '/views/SHMDampedVideoProof.html');
 });
 
-// listen for requests :)
-var listener = app.listen(process.env.PORT, function() {
-  console.log('Your app is listening on port ' + listener.address().port);
+
+
+app.post('/upload',function(req,res){
+  var toDownload = req.body.dataObject;
+  fs.writeFile('tempDownload/DownloadedScene.txt', toDownload, function(err, data){
+      if (err) console.log(err);
+      console.log("Successfully Written to File.");
+  });
+  res.send("200");
+/*  fs.readFile('tempDownload/temp.txt', function (err, content) {
+            if (err) {
+                res.writeHead(400, {'Content-type':'text/html'})
+                console.log(err);
+                res.end("No such file");
+            } else {
+                //specify Content will be an attachment
+                res.setHeader('Content-disposition', 'attachment; filename=dataObject');
+                res.end(content);
+            }
+        });*/
+
+});
+
+app.get('/download',function(req,res){
+var file = __dirname + '/tempDownload/DownloadedScene.txt';
+  res.setHeader('Content-disposition', 'attachment; filename=DownloadedScene.txt');
+  res.setHeader('Content-Type', 'text/txt');
+  res.download(file);
 });

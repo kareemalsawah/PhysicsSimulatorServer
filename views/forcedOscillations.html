@@ -11,24 +11,26 @@
 
 <div id="wrapper">
 <ul id="navBar">
-<li><a href="index.html">Simulate</a></li>
-<li><a class="active" href="examples.html">Examples</a></li>
-<li><a href="documentation.html">Documentation</a></li>
+<li><a class="active" href="#">Simulate</a></li>
+<li><a href="examples">Examples</a></li>
+<li><a href="documentation">Documentation</a></li>
+<li style="float:right;"><a id="boardA" href="#" onclick="boardSwitch();">Board Mode</a></li>
+<li style="float:right;"><a href="#" class="btn btn-primary" id="undoBtn" onclick="undo();">Undo</a></li>
 </ul>
 
-
+<div id="bodyWrapper">
 <div class="sideBySide" id="canvasDiv">
 <canvas id="canvas"></canvas>
 </div>
 <div class="sideBySide" id="placementOptions">
 <div id="controls">
 	<a class="sideBySide buttonControls" id="pause" onclick='control("pause");'>&#9632;</a>
-	<a class="sideBySide buttonControls" id="play" onclick='control("play");'>&#9658;</a>
-	<a class="sideBySide buttonControls" id="nextFrame" onclick='control("nextFrame");'>&#8827;</a>
+	<a class="sideBySide buttonControls" id="play" onclick='control("play");'>&#10148;</a>
+	<a class="sideBySide buttonControls" id="nextFrame" onclick='control("nextFrame");'>&#10148;&#124;</a>
 </div>
 <br>
 <ul class="topnav" id="navBar2">
-<li><a id="placeObjectsNav" class="active navBar2Li" onclick='domShow("place");'>Place Object</a></li>
+<li><a id="placeObjectsNav" class="active navBar2Li" onclick='domShow("place");'>Main</a></li>
 <li><a id="GraphNav" class="navBar2Li" onclick='domShow("graph");'>Graph</a></li>
 <li><a id="VariablesNav" class="navBar2Li" onclick='domShow("variables");'>Variables</a></li>
 <li><a id="TimeNav" class="navBar2Li" onclick='domShow("time");'>Time</a></li>
@@ -46,10 +48,10 @@ function navbarResponsive() {
     }
 }
 </script>
-<div id="placeObjectsDiv">
-	<h2 id="currentCommand">Current Command:</h2>
+<div class="PlacementDiv" id="placeObjectsDiv">
+	<h2 id="currentCommand">Current Command: Simulation Paused</h2>
 	<hr>
-	<div class="dropdown">
+	<div class="dropdown" id="placeDropdown">
 	  	<button class="dropbtn">Select Item to Place</button>
 	  	<div class="dropdown-content">
 		    <a onclick='showSettings("particle");'>Particle</a>
@@ -57,6 +59,14 @@ function navbarResponsive() {
 		    <a onclick='showSettings("support");'>Support</a>
 		    <a onclick='showSettings("simpleRope");'>Simple Rope</a>
 		    <a onclick='showSettings("rope");'>Complex Rope</a>
+	  	</div>
+	</div>
+
+	<div class="dropdown" id="deleteDropdown">
+	  	<button class="dropbtnDelete">Delete An Item</button>
+	  	<div class="dropdown-content">
+		    <a onclick='showDeleteSettings("particle");'>Particle</a>
+		    <a onclick='showDeleteSettings("force");'>Force</a>
 	  	</div>
 	</div>
 
@@ -102,7 +112,7 @@ function navbarResponsive() {
 	        	<input type="color" id="particleColor" value="#ff0000">
 	      	</div>
 	    </div>
-		<a class="btn btn-primary" onclick='place("particle");' style="margin-top:10px;margin-bottom:20px;">Place with mouse</a>
+		<a class="btn btn-primary" onclick='place("particle");' style="margin-top:10px;margin-bottom:20px;">Place</a>
 		<br>
 		<div class="row">
 	      	<div class="col-25">
@@ -385,6 +395,47 @@ function navbarResponsive() {
 		<a class="btn btn-danger" onclick='cancelPlacement();'>Cancel</a>
 	</div>
 
+
+
+
+
+
+	<div class="PlacementDiv" id="particleDeleteSettings" style="display:none;overflow-y: scroll;height:350px;">
+		<h2 class="nav2Titles">Delete Particle</h2>
+		<div class="row">
+				<div class="col-25">
+					<label>Particle Number:</label>
+				</div>
+				<div class="col-75">
+					<input type="text" id="deleteParticleNumber" value="">
+				</div>
+		</div>
+		<a class="btn btn-danger" onclick='deleteParticle();'>Delete</a>
+		<a class="btn btn-danger" onclick='cancelDelete();'>Cancel</a>
+	</div>
+
+	<div id="forceDeleteSettings" style="display:none;overflow-y: scroll;height:350px;">
+		<h2 class="nav2Titles">Delete Force</h2>
+		<div class="row">
+				<div class="col-25">
+					<label>First Particle:</label>
+				</div>
+				<div class="col-75">
+					<input type="text" id="deleteForce1" value="">
+				</div>
+		</div>
+		<div class="row">
+				<div class="col-25">
+					<label>Second Particle:</label>
+				</div>
+				<div class="col-75">
+					<input type="text" id="deleteForce2" value="">
+				</div>
+		</div>
+		<a class="btn btn-danger" onclick='deleteForce();'>Delete</a>
+		<a class="btn btn-danger" onclick='cancelDelete();'>Cancel</a>
+	</div>
+
 </div>
 
 <div id="GraphDiv">
@@ -489,9 +540,9 @@ function navbarResponsive() {
     </div>
     <h1 style="margin-top:40px;">Stopwatch:</h1>
     <div class="row stopwatchControls">
-    <a class="btn btn-primary sideBySide stopwatchBtn" onclick="timer('start');">Start</a>
-    <a class="btn btn-primary sideBySide stopwatchBtn" onclick="timer('pause');">Stop</a>
-    <a class="btn btn-primary sideBySide stopwatchBtn" onclick="timer('reset');">Reset</a>
+    <a class="btn btn-primary sideBySide" id="stopwatchBtn" onclick="timer('start');">Start</a>
+    <a class="btn btn-primary sideBySide" id="stopwatchBtn" onclick="timer('pause');">Stop</a>
+    <a class="btn btn-primary sideBySide" id="stopwatchBtn" onclick="timer('reset');">Reset</a>
     </div>
     <div class="row">
     <h2 id="timer">00:00.000</h2>
@@ -502,22 +553,22 @@ function navbarResponsive() {
 <div id="SettingsDiv" style="display:none;overflow-y: scroll;height:450px;">
 	<h2 class="nav2Titles">Settings:</h2>
 	<h2 class="nav2Titles">Special Settings:</h2>
-		<div class="col-25" style="width:10%">
-	        	<label>w:</label>
-	      	</div>
-			<div class="rangeInput" style="margin-bottom:80px;">
-		      	<div class="col-30 sideBySide">
-		        	<input type="text" id="minSpecial" value="1" size="2">
-		      	</div>
-		      	<div class="col-20 slidecontainer sideBySide">
-					 	<input type="range" min="1" max="5" value="2.218" step = "0.1" class="slider" id="special">
-				</div>
+	  <div class="col-25" style="width:10%">
+	          <label>w:</label>
+	        </div>
+	    <div class="rangeInput" style="margin-bottom:80px;">
+	          <div class="col-30 sideBySide">
+	            <input type="text" id="minSpecial" value="1" size="2">
+	          </div>
+	          <div class="col-20 slidecontainer sideBySide">
+	          <input type="range" min="1" max="5" value="2.218" step = "0.1" class="slider" id="special">
+	      </div>
 
-		      	<div class="col-30 sideBySide">
-		        	<input type="text" id="maxSpecial" value="5" size="2">
-		      	</div>
-	      	</div>
-	      	<br>
+	          <div class="col-30 sideBySide">
+	            <input type="text" id="maxSpecial" value="5" size="2">
+	          </div>
+	        </div>
+	        <br>
 	<div class="row">
 		<div class="col-25">
         	<label>Gravity:</label>
@@ -540,7 +591,15 @@ function navbarResponsive() {
         	<label>Type of time-integration:</label>
       	</div>
       	<div class="col-75">
-        	<input type="text" id="integrationType">
+        	<!--<input type="text" id="integrationType">-->
+					<select id="integrationType">
+					  <option value="ExplicitEuler">Explicit Euler</option>
+					  <option value="SymplecticEuler">Symplectic Euler</option>
+					  <option value="ImplicitEuler">Implicit Euler</option>
+					  <option value="LinearizedImplicit">Linearized Implicit</option>
+					  <option value="ImplicitExplicit">Implicit Explicit</option>
+					  <option value="ImplicitSymplectic">Implicit Symplectic</option>
+					</select>
       	</div>
 	</div>
 
@@ -630,12 +689,17 @@ function navbarResponsive() {
 <div id="myMsgBox" class="msgBox">
   <div class="msgBox-content">
     <span onclick="closeMsg();" class="close">&times;</span>
+		<div class="row">
     <h4 class="msgBoxTitles" style="float:left;">Name</h4>
     <input type="text" class="msgBoxText" id="name"></input>
-    <h1></h1>
+	</div>
+    <br>
+		<div class="row">
     <h4 class="msgBoxTitles" style="float:left;">Particle Number</h4>
     <input  type="text" class="msgBoxText" id="parNum"></input>
-    <h1></h1>
+	</div>
+    <br>
+		<div class="row">
     <h4 class="msgBoxTitles" style="float:left;">To Graph</h4>
     <select id="toGraph">
   		<option value="x">X-Position</option>
@@ -646,17 +710,29 @@ function navbarResponsive() {
   		<option value="v">Speed</option>
   		<option value="KE">Kinetic Energy</option>
 	</select>
-    <h1></h1>
+</div>
+    <br>
+<div class="row">
     <h4 class="msgBoxTitles" style="float:left;">Y-shift</h4>
     <input type="text" class="msgBoxText" id="graphYShift"></input>
-    <h1></h1>
+
+	</div>
+	<br>
+<div class="row">
     <h4 class="msgBoxTitles" style="float:left;">Color</h4>
     <input type="color" id="colorpicker" value="#ff0000">
-    <h1></h1>
+	</div>
+	<br>
     <div id="toAdd"></div>
   </div>
 </div>
+
+<div id="boardMode" class="boardBox">
+<canvas id="boardCanvas"></canvas>
 </div>
+</div>
+</div>
+
 <h1 id="orientation-error">Please use this application only in landscape mode (change the settings in the phone to allow for screen rotation and use the application in landscape then reload the page)</h1>
 </body>
 
@@ -665,8 +741,6 @@ function resizeCanvasToDisplaySize(canv) {
    // look up the size the canv is being displayed
    var width = canv.clientWidth;
    var height = canv.clientHeight;
-	 console.log(width);
-	 console.log(height);
    // If it's resolution does not match change it
    if (canv.width !== width || canv.height !== height) {
      canv.width = width;
@@ -679,8 +753,11 @@ function resizeCanvasToDisplaySize(canv) {
 
 resizeCanvasToDisplaySize(document.getElementById("canvas"));
 resizeCanvasToDisplaySize(document.getElementById("graphCanvas"));
+resizeCanvasToDisplaySize(document.getElementById("boardCanvas"));
 document.getElementById("GraphDiv").style = "display:none;";
+document.getElementById("boardMode").style = "display:none;";
 </script>
+<script src="js/board.js"></script>
 <script src="js/math.min.js"></script>
 <script src="js/dom.js"></script>
 <script src="js/helper.js"></script>
@@ -693,6 +770,8 @@ document.getElementById("GraphDiv").style = "display:none;";
 createObjects();
 loop();
 setSavedValues();
+
+
 
 </script>
 </html>
