@@ -13,6 +13,7 @@ function createObjects(){
 	var simpleGravityForce = new SimpleGravity(gravityVector);
 	var linearDampingForce = new DragDampingForce(0.0);
 	var springForce1 = new SpringForce(0,10000000,4,0.0);
+	springForce1.support = true;
 	forceTypes = [];
 	forceTypes.push(simpleGravityForce);
 	forceTypes.push(linearDampingForce);

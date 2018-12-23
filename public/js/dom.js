@@ -142,7 +142,7 @@ function timer(cmd){
 function setSavedValues(){
 	document.getElementById("dtSetting").value = dtGeneral;
 	document.getElementById("gravitySetting").value=scene.forceTypes[0].gravity[0]+","+scene.forceTypes[0].gravity[1];
-	document.getElementById("linearDampingSetting").value="0.0";
+	document.getElementById("linearDampingSetting").value=scene.forceTypes[1].beta;
 	document.getElementById("integrationType").value=scene.integrationMethod;
 	document.getElementById("convergenceRate").value=scene.minConvergenceImplicit;
 	document.getElementById("maxLoops").value=scene.maxLoopsForImplicit;
@@ -245,7 +245,15 @@ function place(type){
 			document.getElementById("currentCommand").innerHTML = "Current Command: Select first object";
 		}
 	}else{
-
+		placing = "0";
+		springElement1 = -1;
+		springElement2 = -1;
+		ropeElement = -1;
+		ropePos = [[0,0],[0,0]];
+		support = false;
+		paused = true;
+		document.getElementById("currentCommand").innerHTML = "Current Command: Simulation Paused";
+		place(type);
 	}
 }
 
@@ -374,8 +382,20 @@ function instantPlace(type){
 
 function saveSettings(){
 	var gravitySetting = document.getElementById("gravitySetting").value.split(",");
-	var linearDampingSetting = parseFloat(document.getElementById("linearDampingSetting").value);
+
 	var integrationType = document.getElementById("integrationType").value;
+	var linearDampingSetting = parseFloat(document.getElementById("linearDampingSetting").value);
+	if(linearDampingSetting>0){
+		for(var i = 0; i < scene.forceTypes.length; i++){
+			if(scene.forceTypes[i].type == "SpringForce"){
+				if(scene.forceTypes[i].support){
+					scene.forceTypes[i].dampingBeta = linearDampingSetting*4;
+				}
+			}
+		}
+		integrationType = "ImplicitEuler";
+		document.getElementById("integrationType").value = "ImplicitEuler";
+	}
 	var convergenceRate = document.getElementById("convergenceRate").value;
 	var maxLoops = document.getElementById("maxLoops").value;
 	scene.forceTypes[0].gravity[0] = parseFloat(gravitySetting[0]);
@@ -407,8 +427,10 @@ function control(type){
 function placeRope(type){
 	if(type=="simple"){
 		placing = "simpleRope";
+		document.getElementById("currentCommand").innerHTML = "Current Command: Select first position";
 	}else if(type=="complex"){
 		placing = "rope";
+		document.getElementById("currentCommand").innerHTML = "Current Command: Select first position";
 	}
 }
 

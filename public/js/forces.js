@@ -61,7 +61,7 @@ function DragDampingForce(beta){
 
 		return HessV;
 	}
-	
+
 }
 
 function SpringForce(edgeIndex,k,l0,dampingBeta){
@@ -70,6 +70,7 @@ function SpringForce(edgeIndex,k,l0,dampingBeta){
 	this.l0 = l0; //Resting length of the spring
 	this.dampingBeta = dampingBeta; //Damping Coefficient
 	this.type = "SpringForce";
+	this.support = false;
 
 	this.addE = function(x,v,m,E,edge,particle1,particle2){
 		var currentLength = Math.sqrt(Math.pow(x[2*edge.p1]-x[2*edge.p2],2)+Math.pow(x[2*edge.p1+1]-x[2*edge.p2+1],2));
@@ -77,7 +78,7 @@ function SpringForce(edgeIndex,k,l0,dampingBeta){
 		return E;
 	}
 
-	this.subtractE = function(x,v,m,E,edge,particle1,particle2){	
+	this.subtractE = function(x,v,m,E,edge,particle1,particle2){
 		var diff1 = x[2*edge.p1]-x[2*edge.p2];
 		var diff2 = x[2*edge.p1+1]-x[2*edge.p2+1];
 		var currentLength = Math.sqrt(diff1*diff1+diff2*diff2);
@@ -175,7 +176,7 @@ function SpringForce(edgeIndex,k,l0,dampingBeta){
 		HessX[edge.p1*2+1][edge.p1*2] -= K[1][0];
 		HessX[edge.p1*2][edge.p1*2+1] -= K[0][1];
 		HessX[edge.p1*2+1][edge.p1*2+1] -= K[1][1];
-		  
+
 		HessX[edge.p1*2][edge.p2*2] -= -1*K[0][0];
 		HessX[edge.p1*2+1][edge.p2*2] -= -1*K[1][0];
 		HessX[edge.p1*2][edge.p2*2+1] -= -1*K[0][1];
@@ -185,7 +186,7 @@ function SpringForce(edgeIndex,k,l0,dampingBeta){
 		HessX[edge.p2*2+1][edge.p1*2] -= -1*K[1][0];
 		HessX[edge.p2*2][edge.p1*2+1] -= -1*K[0][1];
 		HessX[edge.p2*2+1][edge.p1*2+1] -= -1*K[1][1];
-		  
+
 		HessX[edge.p2*2][edge.p2*2] -= K[0][0];
 		HessX[edge.p2*2+1][edge.p2*2] -= K[1][0];
 		HessX[edge.p2*2][edge.p2*2+1] -= K[0][1];
@@ -213,7 +214,7 @@ function SpringForce(edgeIndex,k,l0,dampingBeta){
 		HessV[edge.p1*2+1][edge.p1*2] -= -1*K[1][0];
 		HessV[edge.p1*2][edge.p1*2+1] -= -1*K[0][1];
 		HessV[edge.p1*2+1][edge.p1*2+1] -= -1*K[1][1];
-		
+
 		HessV[edge.p1*2][edge.p2*2] -= K[0][0];
 		HessV[edge.p1*2+1][edge.p2*2] -= K[1][0];
 		HessV[edge.p1*2][edge.p2*2+1] -= K[0][1];
@@ -223,7 +224,7 @@ function SpringForce(edgeIndex,k,l0,dampingBeta){
 		HessV[edge.p2*2+1][edge.p1*2] -= K[1][0];
 		HessV[edge.p2*2][edge.p1*2+1] -= K[0][1];
 		HessV[edge.p2*2+1][edge.p1*2+1] -= K[1][1];
-		
+
 		HessV[edge.p2*2][edge.p2*2] -= -1*K[0][0];
 		HessV[edge.p2*2+1][edge.p2*2] -= -1*K[1][0];
 		HessV[edge.p2*2][edge.p2*2+1] -= -1*K[0][1];

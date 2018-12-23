@@ -31,6 +31,7 @@ var ropePos = [[0,0],[0,0]]; //Positions of the start and end of a rope (simple 
 var support = false; //Whether a spring that will be placed is a normal spring or a support (just a spring with l0 = current distance between the two particles)
 var tempTime = 0;
 var externalLoopOn = false;
+var supports = [];
 
 //If objects graphed is not empty at initialization, add the corresponding elements to DOM
 for(var i = 0; i < objectsGraphed.length; i++){
@@ -174,7 +175,11 @@ function touchClick(mouseX,mouseY){
 		canvas.removeEventListener("mouseout",function(){});
 		canvas.removeEventListener("click",function(){});
 		canvas.removeEventListener("touchstart",function(){});
-		document.getElementById("currentCommand").innerHTML = "Current Command: Running Simulation";
+		if(!paused){
+			document.getElementById("currentCommand").innerHTML = "Current Command: Running Simulation";
+		}else{
+			document.getElementById("currentCommand").innerHTML = "Current Command: Simulation Paused";
+		}
 	}else if(placing=="spring"){
 		if(springElement1==-1){
 			for(var i = 0; i < scene.numParticles; i++){
@@ -203,6 +208,7 @@ function touchClick(mouseX,mouseY){
 				if(support){
 					var supportL = dist(scene.particles[springElement1].pos[0],scene.particles[springElement1].pos[1],scene.particles[springElement2].pos[0],scene.particles[springElement2].pos[1]);
 					scene.addSpringForce(scene.numEdges-1,toAddSpring[0],supportL,toAddSpring[2]);
+					scene.forceTypes[scene.forceTypes.length-1].support = true;
 					support = false;
 				}else{
 					scene.addSpringForce(scene.numEdges-1,toAddSpring[0],toAddSpring[1],toAddSpring[2]);
@@ -216,13 +222,18 @@ function touchClick(mouseX,mouseY){
 				canvas.removeEventListener("mouseout",function(){});
 				canvas.removeEventListener("click",function(){});
 				canvas.removeEventListener("touchstart",function(){});
-				document.getElementById("currentCommand").innerHTML = "Current Command: Running Simulation";
+				if(!paused){
+					document.getElementById("currentCommand").innerHTML = "Current Command: Running Simulation";
+				}else{
+					document.getElementById("currentCommand").innerHTML = "Current Command: Simulation Paused";
+				}
 			}
 		}
 	}else if(placing=="rope"||placing=="simpleRope"){
 		if(ropeElement==-1){
 			ropePos[0] = realCoord;
 			ropeElement = 1;
+			document.getElementById("currentCommand").innerHTML = "Current Command: Select second position";
 		}else{
 			if(realCoord[0]!=ropePos[0][0]||realCoord[1]!=ropePos[0][1]){
 				ropePos[1] = realCoord;
@@ -242,7 +253,11 @@ function touchClick(mouseX,mouseY){
 				canvas.removeEventListener("mouseout",function(){});
 				canvas.removeEventListener("click",function(){});
 				canvas.removeEventListener("touchstart",function(){});
-				document.getElementById("currentCommand").innerHTML = "Current Command: Running Simulation";
+				if(!paused){
+					document.getElementById("currentCommand").innerHTML = "Current Command: Running Simulation";
+				}else{
+					document.getElementById("currentCommand").innerHTML = "Current Command: Simulation Paused";
+				}
 			}
 		}
 	}

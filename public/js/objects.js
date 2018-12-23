@@ -469,6 +469,132 @@ function simulationCanvas(x1,y1,x2,canvasToGraph,contextToGraph,radius,color){
 		this.ctx.strokeStyle = this.color;
 		this.ctx.stroke();
 		this.ctx.closePath();
+
+		//Draw the line on the axes
+		var smallLineSize = 3;
+		var largeLineSize = 7;
+		var textSize = 100;
+		var ten = 0;
+		for(var i = 0; i <= this.x2; i += 0.1){
+			var lineRealPos = this.realToCanCoord(i,0);
+			if(ten==10){
+				this.ctx.beginPath();
+				this.ctx.moveTo(lineRealPos[0],lineRealPos[1]+largeLineSize);
+				this.ctx.lineTo(lineRealPos[0],lineRealPos[1]-largeLineSize);
+				this.ctx.lineWidth = this.radius;
+				this.ctx.strokeStyle = this.color;
+				this.ctx.stroke();
+				this.ctx.closePath();
+				this.ctx.beginPath();
+				this.ctx.fillStyle=this.color;
+				this.ctx.fillText(Math.round(i),lineRealPos[0],lineRealPos[1]+largeLineSize+largeLineSize,textSize);
+				this.ctx.fill();
+				this.ctx.closePath();
+				ten = 0;
+			}else{
+				this.ctx.beginPath();
+				this.ctx.moveTo(lineRealPos[0],lineRealPos[1]+smallLineSize);
+				this.ctx.lineTo(lineRealPos[0],lineRealPos[1]-smallLineSize);
+				this.ctx.lineWidth = this.radius;
+				this.ctx.strokeStyle = this.color;
+				this.ctx.stroke();
+				this.ctx.closePath();
+				ten++;
+			}
+		}
+		ten = 0;
+		for(var i = 0; i  >= this.x1; i -= 0.1){
+			var lineRealPos = this.realToCanCoord(i,0);
+			if(ten==10){
+				this.ctx.beginPath();
+				this.ctx.moveTo(lineRealPos[0],lineRealPos[1]+largeLineSize);
+				this.ctx.lineTo(lineRealPos[0],lineRealPos[1]-largeLineSize);
+				this.ctx.lineWidth = this.radius;
+				this.ctx.strokeStyle = this.color;
+				this.ctx.stroke();
+				this.ctx.closePath();
+
+				this.ctx.beginPath();
+				this.ctx.fillStyle=this.color;
+				this.ctx.fillText(Math.round(i),lineRealPos[0],lineRealPos[1]+largeLineSize+largeLineSize,textSize);
+				this.ctx.fill();
+				this.ctx.closePath();
+				ten = 0;
+			}else{
+				this.ctx.beginPath();
+				this.ctx.moveTo(lineRealPos[0],lineRealPos[1]+smallLineSize);
+				this.ctx.lineTo(lineRealPos[0],lineRealPos[1]-smallLineSize);
+				this.ctx.lineWidth = this.radius;
+				this.ctx.strokeStyle = this.color;
+				this.ctx.stroke();
+				this.ctx.closePath();
+				ten++;
+			}
+		}
+
+
+		var maxPointCanv = this.canToRealCoord(0,0);
+		ten = 0;
+		for(var i = 0; i <= maxPointCanv[1]; i += 0.1){
+			var lineRealPos = this.realToCanCoord(0,i);
+			if(ten==10){
+				this.ctx.beginPath();
+				this.ctx.moveTo(lineRealPos[0]+largeLineSize,lineRealPos[1]);
+				this.ctx.lineTo(lineRealPos[0]-largeLineSize,lineRealPos[1]);
+				this.ctx.lineWidth = this.radius;
+				this.ctx.strokeStyle = this.color;
+				this.ctx.stroke();
+				this.ctx.closePath();
+
+				this.ctx.beginPath();
+				this.ctx.fillStyle=this.color;
+				this.ctx.fillText(Math.round(i),lineRealPos[0]+largeLineSize+largeLineSize,lineRealPos[1],textSize);
+				this.ctx.fill();
+				this.ctx.closePath();
+				ten = 0;
+			}else{
+				this.ctx.beginPath();
+				this.ctx.moveTo(lineRealPos[0]+smallLineSize,lineRealPos[1]);
+				this.ctx.lineTo(lineRealPos[0]-smallLineSize,lineRealPos[1]);
+				this.ctx.lineWidth = this.radius;
+				this.ctx.strokeStyle = this.color;
+				this.ctx.stroke();
+				this.ctx.closePath();
+				ten++;
+			}
+		}
+
+		var minPointCanv = this.canToRealCoord(0,this.canvas.height);
+
+		ten = 0;
+		for(var i = 0; i  >= minPointCanv[1]; i -= 0.1){
+			var lineRealPos = this.realToCanCoord(0,i);
+			if(ten==10){
+				this.ctx.beginPath();
+				this.ctx.moveTo(lineRealPos[0]+largeLineSize,lineRealPos[1]);
+				this.ctx.lineTo(lineRealPos[0]-largeLineSize,lineRealPos[1]);
+				this.ctx.lineWidth = this.radius;
+				this.ctx.strokeStyle = this.color;
+				this.ctx.stroke();
+				this.ctx.closePath();
+
+				this.ctx.beginPath();
+				this.ctx.fillStyle=this.color;
+				this.ctx.fillText(Math.round(i),lineRealPos[0]+largeLineSize+largeLineSize,lineRealPos[1],textSize);
+				this.ctx.fill();
+				this.ctx.closePath();
+				ten = 0;
+			}else{
+				this.ctx.beginPath();
+				this.ctx.moveTo(lineRealPos[0]+smallLineSize,lineRealPos[1]);
+				this.ctx.lineTo(lineRealPos[0]-smallLineSize,lineRealPos[1]);
+				this.ctx.lineWidth = this.radius;
+				this.ctx.strokeStyle = this.color;
+				this.ctx.stroke();
+				this.ctx.closePath();
+				ten++;
+			}
+		}
 	}
 
 	//Draws a boundary around the canvas
