@@ -368,7 +368,17 @@ function cancelDelete(){
 }
 
 function instantPlace(type){
-	if(type=="particle"){
+	if(placing!="0"){
+		placing = "0";
+		springElement1 = -1;
+		springElement2 = -1;
+		ropeElement = -1;
+		ropePos = [[0,0],[0,0]];
+		support = false;
+		paused = true;
+		document.getElementById("currentCommand").innerHTML = "Current Command: Simulation Paused";
+		instantPlace(type);
+	}else if(type=="particle"){
 			toAddParticle[0] = document.getElementById("particleMass").value;
 			toAddParticle[1] = document.getElementById("particleVelocity").value.split(",");
 			toAddParticle[2] = document.getElementById("particleRadius").value;
