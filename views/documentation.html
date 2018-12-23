@@ -277,7 +277,7 @@
                             The settings tab allows you to change many general settings that affect the simulation as a whole. You can also sometimes find a special settings section which are specific to the custom <a href="line3">examples</a>. You can also download the current scene or upload a downloaded scene from the settings. Here is a description of each of the previously mentioned features:
                              <ul style="margin-top:-3%;margin-left:2%;">
                                 <li>Gravity is a 2D vector describing the acceleration due to gravity affecting all particles in the scene measured in m/(s.s)</li>
-                                <li>Linear Damping is a scalar representing the damping coefficient due to air</li>
+                                <li>Linear Damping is a scalar representing the damping coefficient due to air. Note that using a linear damping higher than 0 causes the integration method to automatically switch to Implicit Euler because of its stability. Using negative values can result in unexpected behaviours.</li>
                                 <li>Type of integration is the method of time integration used to run the simulation</li>
                                 <li>Minimum convergence is max error that is allowed per a step in implicit euler</li>
                                 <li>Maximum loops to reach convergence is the maximum iterations of implicit euler allowed before cutting of the loop in order to prevent simulations from running too slow</li>
